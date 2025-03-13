@@ -1,0 +1,4 @@
+# Exclude following folders
+bin/
+obj/
+.vscode/
