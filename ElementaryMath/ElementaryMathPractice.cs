@@ -2,8 +2,13 @@
 // Addition
 
 // Known Issue
-// If you go outside the bounds of the window then bad things will happen.
-// So make sure that window size is sufficiently large
+//     If you go outside the bounds of the window then bad things will happen.
+//     So make sure that window size is sufficiently large
+
+// Note about timer
+//     It just show the total time and doesn't countdown because
+//     I am too dumb to figure out how to implement running timer
+//     while waiting for user input.
 
 
 class ElementaryMathPractice
@@ -210,6 +215,7 @@ class ElementaryMathPractice
         while(DateTime.Now < end)
         {
             Console.WriteLine("Sum as many integers as you can before time runs out.");
+            Console.WriteLine("Enter -1 to exit prematurely");
             Console.WriteLine($"Time = {time} s");
             Console.WriteLine($"Score = {scoreBoard[0]}/{scoreBoard[1]}");
             Console.WriteLine($"Percentage = {scoreBoard[0]/(double)scoreBoard[1]:p2}");
@@ -222,7 +228,7 @@ class ElementaryMathPractice
             int userInput = GetInt($"{n1} + {n2} = ");
             if(userInput == -1)
             {
-                Clear(6);
+                Clear(7);
                 return scoreBoard;
             }
 
@@ -232,7 +238,7 @@ class ElementaryMathPractice
                 scoreBoard[0] += 1;
             }
 
-            Clear(6);
+            Clear(7);
         }
 
         return scoreBoard;
