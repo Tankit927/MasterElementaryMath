@@ -1,6 +1,11 @@
 ﻿// Program to practice elementary math like:
 // Addition
 
+// ToDo
+// Since I can clear certain lines instead of whole window
+// Rewrite over the same thing instead of writing in new line
+
+
 class ElementaryMathPractice
 {
     static void Main()
@@ -79,12 +84,13 @@ class ElementaryMathPractice
             {
                 case 1:
                     {
-                        // Call appropriate method
+                        SumTwoTwoDigitNums();
                         break;
                     }
                 case 2:
                     {
                         // Call appropriate method
+                        Console.WriteLine("\nNot implemented yet");
                         break;
                     }
                 case 3: return;
@@ -103,14 +109,14 @@ class ElementaryMathPractice
         // Method to practice addition of 2 digit +ve integers
 
         int time = 10;
-        double score, count;
-        score = count = double.NaN;
+        int score, count;
+        score = count = 0;
         while(true)
         {
-            Console.WriteLine("Sum as many integers as you can before time runs out.");
+            Console.WriteLine("\nSum as many integers as you can before time runs out.");
             Console.WriteLine($"Time = {time} s");
             Console.WriteLine($"Score = {score}/{count}");
-            Console.WriteLine($"Percentage = {(score/count):p2}");
+            Console.WriteLine($"Percentage = {(score/(double)count):p2}");
             Console.WriteLine();
             Console.WriteLine("1. Start test");
             Console.WriteLine("2. Change time");
@@ -121,7 +127,9 @@ class ElementaryMathPractice
             {
                 case 1:
                     {
-                        // Call Start Test for two 2-digit nums
+                        int[] scoreBoard = StartSumTwoTwoDigitNums(time);
+                        score = scoreBoard[0];
+                        count = scoreBoard[1];
                         break;
                     }
                 case 2:
@@ -140,7 +148,7 @@ class ElementaryMathPractice
     }
 
 
-    static int[] StartSumTwoTwoDigitTest(int time)
+    static int[] StartSumTwoTwoDigitNums(int time)
     {
         // Method to run sum two 2-digit +ve integers until time runs out
         // or user enters -1
@@ -150,16 +158,11 @@ class ElementaryMathPractice
         DateTime start = DateTime.Now;
         DateTime end = start.AddSeconds(time);
 
-        Console.WriteLine("Sum as many integers as you can before time runs out.");
-        Console.WriteLine($"Time = {time}");
+        Console.WriteLine("\nSum as many integers as you can before time runs out.");
+        Console.WriteLine($"Time = {time} s");
         
         while(DateTime.Now < end)
         {
-            // Figure out how to display timer
-
-            // long remainingTicks = end.Ticks - DateTime.Now.Ticks;
-            // TimeSpan remainingTimeSpan = new TimeSpan(remainingTicks);
-            // Console.WriteLine($"Time = {remainingTimeSpan.Seconds}");
             Console.WriteLine($"Score = {scoreBoard[0]}/{scoreBoard[1]}");
             Console.WriteLine($"Percentage = {scoreBoard[0]/(double)scoreBoard[1]:p2}");
             Console.WriteLine();
@@ -180,21 +183,10 @@ class ElementaryMathPractice
                 scoreBoard[0] += 1;
             }
 
-            // Clear previous 4 lines
+            Clear(5);
         }
 
         return scoreBoard;
-    }
-
-
-    static void ClearCurrentLine()
-    {
-        // Method to clear current line in console
-
-        int row = Console.CursorTop;
-        Console.SetCursorPosition(0, row);
-        Console.Write(new string(' ', Console.BufferWidth));
-        Console.SetCursorPosition(0, row);
     }
 
 
@@ -202,13 +194,11 @@ class ElementaryMathPractice
     {
         // Method to clear given no. of previous lines starting from current line
 
-        int row = Console.CursorTop;
-
-        while(n > 0)
+        for(int i = 1, row = Console.CursorTop; i <= n; i++, row--)
         {
-            ClearCurrentLine();
-            row -= 1;
-            n -= 1;
+            Console.SetCursorPosition(0, row);
+            Console.Write(new string(' ', Console.BufferWidth));
+            Console.SetCursorPosition(0, row);
         }
     }
 }
