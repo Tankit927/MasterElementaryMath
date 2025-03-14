@@ -1,9 +1,9 @@
 ﻿// Program to practice elementary math like:
 // Addition
 
-// ToDo
-// Since I can clear certain lines instead of whole window
-// Rewrite over the same thing instead of writing in new line
+// Known Issue
+// If you go outside the bounds of the window then bad things will happen.
+// So make sure that window size is sufficiently large
 
 
 class ElementaryMathPractice
@@ -21,17 +21,22 @@ class ElementaryMathPractice
 
         int num;
         bool isInt;
+        int count = 0;
 
         do
         {
             Console.Write(prompt);
             isInt = int.TryParse(Console.ReadLine(), out num);
+            count += 2;
             if(!isInt || (min != null && num < min) || (max != null && num > max))
             {
                 Console.WriteLine($"\nEnter a valid integer in range[{(min == null ? int.MinValue : min)},{(max == null ? int.MaxValue : max)}]");
+                count += 1;
             }
         }
         while(!isInt || (min != null && num < min) || (max != null && num > max));
+
+        Clear(count);
 
         return num;
     }
@@ -42,11 +47,22 @@ class ElementaryMathPractice
         // Method to choose certain math operation to practice like:
         // addition
 
+        bool notImplementedOrError = false;
+
         while(true)
         {
-            Console.WriteLine("\nProgram to practice elementary math like addition.");
+            Console.WriteLine("Program to practice elementary math like addition.");
             Console.WriteLine("1. Addition");
             int choice = GetInt("", 1, 1);
+
+            if(notImplementedOrError)
+            {
+                Clear(4);
+            }
+            else
+            {
+                Clear(3);
+            }
 
             switch(choice)
             {
@@ -58,9 +74,12 @@ class ElementaryMathPractice
                 default:
                     {
                         Console.WriteLine("Error!");
-                        break;
+                        notImplementedOrError = true;
+                        continue;
                     }
             }
+
+            notImplementedOrError = false;
         }
     }
 
@@ -72,13 +91,24 @@ class ElementaryMathPractice
         // 2. Sum ten 2-digit +ve integers
         // 3. Back to main menu
 
+        bool notImplementedOrError = false;
+
         while(true)
         {
-            Console.WriteLine("\nChoose type of addition practice:");
+            Console.WriteLine("Choose type of addition practice:");
             Console.WriteLine("1. Sum two 2-digit +ve integers.");
             Console.WriteLine("2. Sum ten 2-digit +ve integers.");
             Console.WriteLine("3. Back to main menu.");
             int choice = GetInt("", 1, 3);
+
+            if(notImplementedOrError)
+            {
+                Clear(6);
+            }
+            else
+            {
+                Clear(5);
+            }
 
             switch(choice)
             {
@@ -90,16 +120,20 @@ class ElementaryMathPractice
                 case 2:
                     {
                         // Call appropriate method
-                        Console.WriteLine("\nNot implemented yet");
-                        break;
+                        Console.WriteLine("Not implemented yet");
+                        notImplementedOrError = true;
+                        continue;
                     }
                 case 3: return;
                 default:
                     {
                         Console.WriteLine("Error!");
-                        break;
+                        notImplementedOrError = true;
+                        continue;
                     }
             }
+
+            notImplementedOrError = false;
         }
     }
 
@@ -111,9 +145,11 @@ class ElementaryMathPractice
         int time = 10;
         int score, count;
         score = count = 0;
+        bool notImplementedOrError = false;
+
         while(true)
         {
-            Console.WriteLine("\nSum as many integers as you can before time runs out.");
+            Console.WriteLine("Sum as many integers as you can before time runs out.");
             Console.WriteLine($"Time = {time} s");
             Console.WriteLine($"Score = {score}/{count}");
             Console.WriteLine($"Percentage = {(score/(double)count):p2}");
@@ -122,6 +158,15 @@ class ElementaryMathPractice
             Console.WriteLine("2. Change time");
             Console.WriteLine("3. Back to addition sub-menu");
             int choice = GetInt("", 1, 3);
+
+            if(notImplementedOrError)
+            {
+                Clear(10);
+            }
+            else
+            {
+                Clear(9);
+            }
 
             switch(choice)
             {
@@ -135,15 +180,19 @@ class ElementaryMathPractice
                 case 2:
                     {
                         time = GetInt("Enter time in seconds = ", 1);
+                        Clear(1);
                         break;
                     }
                 case 3: return;
                 default:
                     {
                         Console.WriteLine("Error!");
-                        break;
+                        notImplementedOrError = true;
+                        continue;
                     }
             }
+
+            notImplementedOrError = false;
         }
     }
 
@@ -157,12 +206,11 @@ class ElementaryMathPractice
         Random rng = new Random();
         DateTime start = DateTime.Now;
         DateTime end = start.AddSeconds(time);
-
-        Console.WriteLine("\nSum as many integers as you can before time runs out.");
-        Console.WriteLine($"Time = {time} s");
         
         while(DateTime.Now < end)
         {
+            Console.WriteLine("Sum as many integers as you can before time runs out.");
+            Console.WriteLine($"Time = {time} s");
             Console.WriteLine($"Score = {scoreBoard[0]}/{scoreBoard[1]}");
             Console.WriteLine($"Percentage = {scoreBoard[0]/(double)scoreBoard[1]:p2}");
             Console.WriteLine();
@@ -174,6 +222,7 @@ class ElementaryMathPractice
             int userInput = GetInt($"{n1} + {n2} = ");
             if(userInput == -1)
             {
+                Clear(6);
                 return scoreBoard;
             }
 
@@ -183,7 +232,7 @@ class ElementaryMathPractice
                 scoreBoard[0] += 1;
             }
 
-            Clear(5);
+            Clear(6);
         }
 
         return scoreBoard;
