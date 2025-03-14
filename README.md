@@ -2,7 +2,7 @@
 Console app to practice elmentary operations like addition. All you have to do is solve as many questions as you can within the set time. And check your score.
 
 ## Known issues
-- Make sure that window size is sufficiently large so that you don't go exceed the size of window or bad things will happen.
+- Make sure that window size is sufficiently large so that you don't exceed the size of window that is no scroll bars should be there or bad things will happen.
 - The timer shows the total time you'll get and it doesn't countdown because I am too dumb to implement that.
 - Currently only do addition of two random 2-digit +ve integers.
 
