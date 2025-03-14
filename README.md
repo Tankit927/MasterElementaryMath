@@ -24,7 +24,7 @@ Console app to practice elmentary operations like addition. All you have to do i
          - New -> paste the path. For me it is `C:\Programs Files\dotnet\`
     - For linux *(debian 12)*
          - Add path in appropriate configuration file.
-         - I personally have to add path in `/etc/profile` like this. `PATH="/directory_where_I_have_downloaded_dotnet:some_other_path:more_other_paths`
+         - I personally have to add path in `/etc/profile` like this. `PATH=/directory_where_I_have_downloaded_dotnet:some_other_path:more_other_paths`
 
 ## Note
 - .NET 8.0 Runtime need to be installed on the system and should be accessible by including its path in environment variables *(recommended)*.
