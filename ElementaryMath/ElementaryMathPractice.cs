@@ -207,7 +207,7 @@ class ElementaryMathPractice
         // Method to run sum two 2-digit +ve integers until time runs out
         // or user enters -1
 
-        int[] scoreBoard = {0, 0}; // score, count
+        int[] scoreBoard = {0, 0, 0, 0, 0, 0}; // score, count, averageScore, totalCount, maxScore, maxScoreCount
         Random rng = new Random();
         DateTime start = DateTime.Now;
         DateTime end = start.AddSeconds(time);
@@ -242,6 +242,68 @@ class ElementaryMathPractice
         }
 
         return scoreBoard;
+    }
+
+
+    static int[] GetAverageInFraction(int currentAverageNumerator, int currentAverageDenominator, int count, int newTerm=0)
+    {
+        // Method to calculate running average
+
+        // Step 1: av *= (count -1)
+        // Find GCD of currentAverageDenominator & (count - 1)
+        // currentAverageDenominator /= GCD
+        // int tempCount = (count - 1) / GCD
+        // currentAverageNumerator *= tempCount
+
+        // Step 2: av += newTerm
+        // newTerm *= currentAverageDenominator
+        // currentAverageNumerator += newTerm
+        // Find GCD of currentAverageNumerator & currentAverageDenominator
+        // currentAverageNumerator /= GCD
+        // currentAverageDenominator /= GCD
+
+        // Step 3: av /= count
+        // Find GCD of currentAverageNumerator & count
+        // currentAverageNumerator /= GCD
+        // count /= GCD
+        // currentAverageDenominator *= count
+
+        // return {currentAverageNumerator, currentAverageDenominator}
+    }
+
+
+    static int GetGCD(params int[] myArray)
+    {
+        // Method to find GCD(Greatest Common Divisor) of given integers
+
+        int gcd = Math.Abs(myArray[0]);
+        int len = myArray.Length;
+
+        for(int i = 0; i < len; i++)
+        {
+            myArray[i] = Math.Abs(myArray[i]);
+            if(myArray[i] < gcd)
+            {
+                gcd = myArray[i];
+            }
+        }
+
+        for(; gcd >= 1; gcd--)
+        {
+            for(int i = 0; i < len; i++)
+            {
+                if(myArray[i] % gcd != 0)
+                {
+                    break;
+                }
+                else if(i == len-1)
+                {
+                    return gcd;
+                }
+            }
+        }
+
+        return gcd;
     }
 
 
