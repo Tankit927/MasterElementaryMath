@@ -11,8 +11,14 @@
 //     while waiting for user input.
 
 
+using System.Runtime.Intrinsics.X86;
+
 class ElementaryMathPractice
 {
+    const int PAD = 20;
+    static int[] AV = {0, 1}; // averageNumerator, averageDenominator
+    static int[] MAX_SCORE = {0, 1}; // maxNumerator, maxDenominator
+
     static void Main()
     {
         ChooseOperationToPractice();
@@ -155,9 +161,26 @@ class ElementaryMathPractice
         while(true)
         {
             Console.WriteLine("Sum as many integers as you can before time runs out.");
-            Console.WriteLine($"Time = {time} s");
-            Console.WriteLine($"Score = {score}/{count}");
-            Console.WriteLine($"Percentage = {(score/(double)count):p2}");
+            Console.Write("Time: ".PadLeft(PAD));
+            Console.Write($"{time}s".PadRight(PAD));
+            Console.Write("Max score: ".PadLeft(PAD));
+            Console.Write($"{MAX_SCORE[0]}/{MAX_SCORE[1]}");
+            Console.WriteLine();
+            Console.Write("".PadLeft(PAD));
+            Console.Write("".PadRight(PAD));
+            Console.Write("Max score%: ".PadLeft(PAD));
+            Console.Write($"{MAX_SCORE[0]/(double)MAX_SCORE[1]:p2}");
+            Console.WriteLine();
+            Console.Write("Current score: ".PadLeft(PAD));
+            Console.Write($"{score}/{count}".PadRight(PAD));
+            Console.Write("Average score: ".PadLeft(PAD));
+            Console.Write($"{AV[0]}/{AV[1]}");
+            Console.WriteLine();
+            Console.Write("Current score%: ".PadLeft(PAD));
+            Console.Write($"{score/(double)count:p2}".PadRight(PAD));
+            Console.Write("Average score%: ".PadLeft(PAD));
+            Console.Write($"{AV[0]/(double)AV[1]:p2}");
+            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("1. Start test");
             Console.WriteLine("2. Change time");
@@ -166,11 +189,11 @@ class ElementaryMathPractice
 
             if(notImplementedOrError)
             {
-                Clear(10);
+                Clear(11);
             }
             else
             {
-                Clear(9);
+                Clear(10);
             }
 
             switch(choice)
@@ -207,7 +230,7 @@ class ElementaryMathPractice
         // Method to run sum two 2-digit +ve integers until time runs out
         // or user enters -1
 
-        int[] scoreBoard = {0, 0, 0, 0, 0, 0}; // score, count, averageScore, totalCount, maxScore, maxScoreCount
+        int[] scoreBoard = {0, 0, AV[0], AV[1], MAX_SCORE[0], MAX_SCORE[1]}; // score, count, averageNumerator, averageDenominator, maxScore, maxScoreCount
         Random rng = new Random();
         DateTime start = DateTime.Now;
         DateTime end = start.AddSeconds(time);
@@ -216,9 +239,26 @@ class ElementaryMathPractice
         {
             Console.WriteLine("Sum as many integers as you can before time runs out.");
             Console.WriteLine("Enter -1 to exit prematurely");
-            Console.WriteLine($"Time = {time} s");
-            Console.WriteLine($"Score = {scoreBoard[0]}/{scoreBoard[1]}");
-            Console.WriteLine($"Percentage = {scoreBoard[0]/(double)scoreBoard[1]:p2}");
+            Console.Write("Time: ".PadLeft(PAD));
+            Console.Write($"{time}s".PadRight(PAD));
+            Console.Write("Max score: ".PadLeft(PAD));
+            Console.Write($"{scoreBoard[4]}/{scoreBoard[5]}");
+            Console.WriteLine();
+            Console.Write("".PadLeft(PAD));
+            Console.Write("".PadRight(PAD));
+            Console.Write("Max score%: ".PadLeft(PAD));
+            Console.Write($"{scoreBoard[4]/(double)scoreBoard[5]:p2}");
+            Console.WriteLine();
+            Console.Write("Current score: ".PadLeft(PAD));
+            Console.Write($"{scoreBoard[0]}/{scoreBoard[1]}".PadRight(PAD));
+            Console.Write("Average score: ".PadLeft(PAD));
+            Console.Write($"{scoreBoard[2]}/{scoreBoard[3]}");
+            Console.WriteLine();
+            Console.Write("Current score%: ".PadLeft(PAD));
+            Console.Write($"{scoreBoard[0]/(double)scoreBoard[1]:p2}".PadRight(PAD));
+            Console.Write("Average score%: ".PadLeft(PAD));
+            Console.Write($"{scoreBoard[2]/(double)scoreBoard[3]:p2}");
+            Console.WriteLine();
             Console.WriteLine();
             
             int n1 = rng.Next(10, 100);
@@ -228,7 +268,13 @@ class ElementaryMathPractice
             int userInput = GetInt($"{n1} + {n2} = ");
             if(userInput == -1)
             {
-                Clear(7);
+                Clear(8);
+                AV = GetAverageInFraction(scoreBoard[2], scoreBoard[3], 1, scoreBoard[0], scoreBoard[1]);
+                scoreBoard[2] = AV[0];
+                scoreBoard[3] = AV[1];
+                MAX_SCORE = Max(scoreBoard[0], scoreBoard[1], MAX_SCORE[0], MAX_SCORE[1]);
+                scoreBoard[4] = MAX_SCORE[0];
+                scoreBoard[5] = MAX_SCORE[1];
                 return scoreBoard;
             }
 
@@ -238,37 +284,186 @@ class ElementaryMathPractice
                 scoreBoard[0] += 1;
             }
 
-            Clear(7);
+            AV = GetAverageInFraction(scoreBoard[2], scoreBoard[3], 1, scoreBoard[0], scoreBoard[1]);
+            scoreBoard[2] = AV[0];
+            scoreBoard[3] = AV[1];
+            MAX_SCORE = Max(scoreBoard[0], scoreBoard[1], MAX_SCORE[0], MAX_SCORE[1]);
+            scoreBoard[4] = MAX_SCORE[0];
+            scoreBoard[5] = MAX_SCORE[1];
+
+            Clear(8);
         }
 
         return scoreBoard;
     }
 
 
-    static int[] GetAverageInFraction(int currentAverageNumerator, int currentAverageDenominator, int count, int newTerm=0)
+    static int[] Max(int n1, int d1, int n2, int d2)
+    {
+        // Method to return greater fraction
+        // n1/d1, n2/d2
+
+        if(n1*d2 > n2*d1)
+        {
+            return [n1, d1];
+        }
+
+        return [n2, d2];
+    }
+
+
+    static int[] GetAverageInFraction(int currentAverageNumerator, int currentAverageDenominator, int count, int newTermNumerator, int newTermDenominator)
     {
         // Method to calculate running average
 
         // Step 1: av *= (count -1)
-        // Find GCD of currentAverageDenominator & (count - 1)
-        // currentAverageDenominator /= GCD
-        // int tempCount = (count - 1) / GCD
-        // currentAverageNumerator *= tempCount
+        int gcd = GetGCD(currentAverageDenominator, count-1 == 0 ? count : count-1);
+        currentAverageDenominator /= gcd;
+        int tempCount = (count - 1) / gcd;
+        currentAverageNumerator *= tempCount;
 
         // Step 2: av += newTerm
-        // newTerm *= currentAverageDenominator
-        // currentAverageNumerator += newTerm
-        // Find GCD of currentAverageNumerator & currentAverageDenominator
-        // currentAverageNumerator /= GCD
-        // currentAverageDenominator /= GCD
+        int lcm = GetLCM(currentAverageDenominator, newTermDenominator);
+        currentAverageNumerator *= (lcm / currentAverageDenominator);
+        newTermNumerator *= (lcm / newTermDenominator);
+        currentAverageNumerator += newTermNumerator;
+        gcd = GetGCD(currentAverageNumerator, lcm);
+        currentAverageNumerator /= gcd;
+        currentAverageDenominator = lcm / gcd;
 
         // Step 3: av /= count
-        // Find GCD of currentAverageNumerator & count
-        // currentAverageNumerator /= GCD
-        // count /= GCD
-        // currentAverageDenominator *= count
+        gcd = GetGCD(currentAverageNumerator, count);
+        currentAverageNumerator /= gcd;
+        count /= gcd;
+        currentAverageDenominator *= count;
 
-        // return {currentAverageNumerator, currentAverageDenominator}
+        return [currentAverageNumerator, currentAverageDenominator];
+    }
+
+
+    static int GetLCM(params int[] myArray)
+    {
+        // Method to calculate LCM(Least Common Multiple) of given integers
+
+        int len = myArray.Length;
+        int[] temp = new int[len];
+
+        for(int i = 0; i < myArray.Length; i++)
+        {
+            temp[i] = Math.Abs(myArray[i]);
+        }
+
+        int largest = temp[0];
+
+        for(int i = 1; i < len; i++)
+        {
+            if(temp[i] > largest)
+            {
+                largest = temp[i];
+            }
+        }
+
+        int lcm = 1;
+        int[] primes = GeneratePrimesUpto(largest); // prime nos. upto largest num
+        while(!IsEachElementOne(temp))
+        {
+            for(int i = 0; i < primes.Length; i++)
+            {
+                if(IsAnyElementDivBy(primes[i], temp))
+                {
+                    for(int j = 0; j < len; j++)
+                    {
+                        if(temp[j] > 1 && temp[j] % primes[i] == 0)
+                        {
+                            lcm *= primes[i];
+                            temp[j] /= primes[i];
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        return lcm;
+    }
+
+
+    static bool IsEachElementOne(params int[] myArray)
+    {
+        // Method to check whether each element in given array is 1
+
+        foreach(int i in myArray)
+        {
+            if(i != 1)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    static bool IsAnyElementDivBy(int num, params int[] myArray)
+    {
+        // Method to check whether any element(>1) of given array is divisible
+        // by given integer
+
+        foreach(int i in myArray)
+        {
+            if(i > 1 && i % num == 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    static int[] GeneratePrimesUpto(int num)
+    {
+        // Method to generate prime numbers upto a certain given integer
+        // using seive of erathosthenes
+
+        int len = num - 1;
+        int[] nums = new int[len];
+        int[] mask = new int[len]; // 0-unmarked, 1-prime, 2-composite
+        int noOfPrimes = 0;
+
+        for(int i = 0; i < len; i++)
+        {
+            nums[i] = i + 2;
+        }
+
+        for(int i = 0; i < len; i++)
+        {
+            if(mask[i] == 0)
+            {
+                int temp = nums[i];
+                mask[i] = 1;
+                noOfPrimes += 1;
+                
+                for(int j = i + temp; j < len; j += temp)
+                {
+                    mask[j] = 2;
+                }
+            }
+        }
+
+        int[] primes = new int[noOfPrimes];
+
+        for(int i = 0, j = 0; i < len; i++)
+        {
+            if(mask[i] == 1)
+            {
+                primes[j] = nums[i];
+                j += 1;
+            }
+        }
+
+        return primes;
     }
 
 
@@ -276,15 +471,16 @@ class ElementaryMathPractice
     {
         // Method to find GCD(Greatest Common Divisor) of given integers
 
-        int gcd = Math.Abs(myArray[0]);
         int len = myArray.Length;
+        int[] temp = new int[len];
+        int gcd = Math.Abs(myArray[0]);
 
         for(int i = 0; i < len; i++)
         {
-            myArray[i] = Math.Abs(myArray[i]);
-            if(myArray[i] < gcd)
+            temp[i] = Math.Abs(myArray[i]);
+            if(temp[i] < gcd)
             {
-                gcd = myArray[i];
+                gcd = temp[i];
             }
         }
 
@@ -292,7 +488,7 @@ class ElementaryMathPractice
         {
             for(int i = 0; i < len; i++)
             {
-                if(myArray[i] % gcd != 0)
+                if(temp[i] % gcd != 0)
                 {
                     break;
                 }
@@ -303,7 +499,7 @@ class ElementaryMathPractice
             }
         }
 
-        return gcd;
+        return gcd == 0 ? 1 : gcd;
     }
 
 
