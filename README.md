@@ -1,3 +1,6 @@
+# Coming soon!
+[Check progress](WIP.md)
+
 # MasterElementaryMath
 Console app to practice elmentary operations like addition. All you have to do is solve as many questions as you can within the set time. And check your score.
 
