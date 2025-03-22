@@ -1,4 +1,7 @@
+To publish
 windows: dotnet publish -c Release --os win --version-suffix 0.1
 windows self contained: dotnet publish -c Release --sc --os win --version-suffix 0.1
 linux: dotnet publish -c Release --os linux --version-suffix 0.1
 linux self contained: dotnet publish -c Release --sc --os linux --version-suffix 0.1
+
+To zip: zip -9 MasterElementaryMath_win_self_contained *
