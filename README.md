@@ -10,10 +10,10 @@ Console app to practice elmentary operations like addition. All you have to do i
 ## Latest Release info:
 | OS | size (in MB) | SHA 256 |
 | :---: | :---: | :---: |
-| [win_x64](https://github.com/Tankit927/MasterElementaryMath/releases/download/0.1/MasterElementaryMath_win.zip) | 0.07 | 7E01E93F818B6659D297E1C92C09ACE8D0FC61AEA8E417CACC1929D241B661F2 |
-| [win_x64_self_contained](https://github.com/Tankit927/MasterElementaryMath/releases/download/0.1/MasterElementaryMath_win_self_contained.zip) | 31.69 | 6F5050611AAD63ACD06D00E9199C722C3718DAA85E6752CAB30F0222F87B9B13 |
+| [win_x64](https://github.com/Tankit927/MasterElementaryMath/releases/download/0.1/MasterElementaryMath_win.zip) | 0.06 | 7E01E93F818B6659D297E1C92C09ACE8D0FC61AEA8E417CACC1929D241B661F2 |
+| [win_x64_self_contained](https://github.com/Tankit927/MasterElementaryMath/releases/download/0.1/MasterElementaryMath_win_self_contained.zip) | 31.7 | 6F5050611AAD63ACD06D00E9199C722C3718DAA85E6752CAB30F0222F87B9B13 |
 | [linux_x64](https://github.com/Tankit927/MasterElementaryMath/releases/download/0.1/ElementaryMath_linux.zip) | 0.03 | A016FC2B1712B8105E30D1BDF86C22F883CBAFE20A6336536811B31358A8A421 |
-| [linux_x64_self_contained](https://github.com/Tankit927/MasterElementaryMath/releases/download/0.1/ElementaryMath_linux_self_contained.zip) | 31.02 | 88E4C7DAECDAC31956806070F13CCA9CA99EB9B384991243FE29611199C53CFD |
+| [linux_x64_self_contained](https://github.com/Tankit927/MasterElementaryMath/releases/download/0.1/ElementaryMath_linux_self_contained.zip) | 31 | 88E4C7DAECDAC31956806070F13CCA9CA99EB9B384991243FE29611199C53CFD |
 
 ## Note
 - .NET 8.0 Runtime need to be installed on the system and its path should be set in environment variables to run non-self contained version *(recommended)*.
