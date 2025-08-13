@@ -90,6 +90,7 @@ class ElementaryMathPractice
         // 2. Sum ten 2-digit +ve integers
         // 3. Back to main menu
 
+        int previousChoice = 0;
         while(true)
         {
             Console.WriteLine("Choose type of addition practice:");
@@ -97,6 +98,11 @@ class ElementaryMathPractice
             Console.WriteLine("2. Sum ten 2-digit +ve integers.");
             Console.WriteLine("3. Back to main menu.");
             int choice = GetInt("", 1, 3);
+            if(choice != previousChoice)
+            {
+                previousChoice = choice;
+                ResetScore();
+            }
 
             Console.Clear();
 
@@ -104,27 +110,26 @@ class ElementaryMathPractice
             {
                 case 1:
                     {
-                        SumTwoTwoDigitNums();
+                        StartTest(1);
                         break;
                     }
                 case 2:
                     {
-                        // Call appropriate method
-                        Console.WriteLine("Not implemented yet");
-                        continue;
+                        StartTest(2);
+                        break;
                     }
                 case 3: return;
                 default:
                     {
                         Console.WriteLine("Error!");
-                        continue;
+                        break;
                     }
             }
         }
     }
 
 
-    static void SumTwoTwoDigitNums()
+    static void StartTest(int test)
     {
         // Method to practice addition of 2 digit +ve integers
 
@@ -150,7 +155,24 @@ class ElementaryMathPractice
                         correctThisTest = 0;
                         attemptThisTest = 0;
                         totalTestCount += 1;
-                        StartSumTwoTwoDigitNums(time);
+                        switch(test)
+                        {
+                            case 1:
+                                {
+                                    StartSumTwoTwoDigitNums(time);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    StartSumTenTwoDigitNums(time);
+                                    break;
+                                }
+                            default:
+                                {
+                                    Console.WriteLine("Error!");
+                                    break;
+                                }
+                        }
                         averageCorrectPerTest = ((averageCorrectPerTest * (totalTestCount-1)) + correctThisTest) / totalTestCount;
                         averageAttemptPerTest = ((averageAttemptPerTest * (totalTestCount-1)) + attemptThisTest) / totalTestCount;
                         break;
@@ -161,26 +183,14 @@ class ElementaryMathPractice
                         time = TimeSpan.FromSeconds(GetInt("Enter time in seconds = ", 1));
                         if(time != temp)
                         {
-                            correctThisTest = 0;
-                            attemptThisTest = 0;
-                            averageAttemptPerTest = 0;
-                            averageCorrectPerTest = 0;
-                            totalTestCount = 0;
-                            maxCorrect = 0;
-                            maxCorrectCount = 0;
+                            ResetScore();
                         }
 
                         break;
                     }
                 case 3:
                     {
-                        correctThisTest = 0;
-                        attemptThisTest = 0;
-                        averageAttemptPerTest = 0;
-                        averageCorrectPerTest = 0;
-                        totalTestCount = 0;
-                        maxCorrect = 0;
-                        maxCorrectCount = 0;
+                        ResetScore();
                         break;
                     }
                 case 4: return;
@@ -194,6 +204,20 @@ class ElementaryMathPractice
     }
 
 
+    static void ResetScore()
+    {
+        // Method to reset score
+
+        correctThisTest = 0;
+        attemptThisTest = 0;
+        averageAttemptPerTest = 0;
+        averageCorrectPerTest = 0;
+        totalTestCount = 0;
+        maxCorrect = 0;
+        maxCorrectCount = 0;
+    }
+
+
     static void StartSumTwoTwoDigitNums(TimeSpan time)
     {
         // Method to run sum two 2-digit +ve integers until time runs out
@@ -202,8 +226,6 @@ class ElementaryMathPractice
         Random rng = new Random();
         Stopwatch stopwatch = new();
         stopwatch.Start();
-        // DateTime start = DateTime.Now;
-        // DateTime end = start.AddSeconds(time);
         
         while(stopwatch.Elapsed < time)
         {
@@ -217,6 +239,62 @@ class ElementaryMathPractice
             int sum = n1 + n2;
             
             int userInput = GetInt($"{n1} + {n2} = ");
+            if(userInput == -1)
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if(sum == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if(correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+
+
+    static void StartSumTenTwoDigitNums(TimeSpan time)
+    {
+        // Method to run sum ten 2-digit +ve integers until time runs out
+        // or user enters -1
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        
+        while(stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Sum as many integers as you can before time runs out.");
+            Console.WriteLine("Enter -1 to exit prematurely");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+            
+            int n1 = rng.Next(10, 100);
+            int n2 = rng.Next(10, 100);
+            int n3 = rng.Next(10, 100);
+            int n4 = rng.Next(10, 100);
+            int n5 = rng.Next(10, 100);
+            int n6 = rng.Next(10, 100);
+            int n7 = rng.Next(10, 100);
+            int n8 = rng.Next(10, 100);
+            int n9 = rng.Next(10, 100);
+            int n10 = rng.Next(10, 100);
+            int sum = n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10;
+            
+            int userInput = GetInt($"{n1} + {n2} + {n3} + {n4} + {n5} + {n6} + {n7} + {n8} + {n9} + {n10} = ");
             if(userInput == -1)
             {
                 Console.Clear();
