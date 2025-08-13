@@ -7,6 +7,8 @@
 //     while waiting for user input.
 
 
+using System.Diagnostics;
+
 class ElementaryMathPractice
 {
     const int PAD_LEFT = 25;
@@ -126,7 +128,7 @@ class ElementaryMathPractice
     {
         // Method to practice addition of 2 digit +ve integers
 
-        int time = 10;
+        TimeSpan time = TimeSpan.FromSeconds(300);
 
         while(true)
         {
@@ -155,8 +157,8 @@ class ElementaryMathPractice
                     }
                 case 2:
                     {
-                        int temp = time;
-                        time = GetInt("Enter time in seconds = ", 1);
+                        TimeSpan temp = time;
+                        time = TimeSpan.FromSeconds(GetInt("Enter time in seconds = ", 1));
                         if(time != temp)
                         {
                             correctThisTest = 0;
@@ -192,16 +194,18 @@ class ElementaryMathPractice
     }
 
 
-    static void StartSumTwoTwoDigitNums(int time)
+    static void StartSumTwoTwoDigitNums(TimeSpan time)
     {
         // Method to run sum two 2-digit +ve integers until time runs out
         // or user enters -1
 
         Random rng = new Random();
-        DateTime start = DateTime.Now;
-        DateTime end = start.AddSeconds(time);
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        // DateTime start = DateTime.Now;
+        // DateTime end = start.AddSeconds(time);
         
-        while(DateTime.Now < end)
+        while(stopwatch.Elapsed < time)
         {
             Console.WriteLine("Sum as many integers as you can before time runs out.");
             Console.WriteLine("Enter -1 to exit prematurely");
@@ -216,7 +220,7 @@ class ElementaryMathPractice
             if(userInput == -1)
             {
                 Console.Clear();
-                return;
+                break;
             }
 
             attemptThisTest += 1;
@@ -234,16 +238,18 @@ class ElementaryMathPractice
             Console.Clear();
         }
 
+        stopwatch.Stop();
+        stopwatch.Reset();
         return;
     }
 
 
-    static void PrintScoreBoard(int time)
+    static void PrintScoreBoard(TimeSpan time)
     {
         // Method to print scoreboard
 
         Console.Write("Time: ".PadLeft(PAD_LEFT));
-        Console.Write($"{time}s".PadRight(PAD_RIGHT));
+        Console.Write($"{time.TotalSeconds}s".PadRight(PAD_RIGHT));
         Console.Write("Max score: ".PadLeft(PAD_LEFT));
         Console.Write($"{maxCorrect}/{maxCorrectCount}");
         Console.WriteLine();
