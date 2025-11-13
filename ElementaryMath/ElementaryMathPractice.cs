@@ -33,23 +33,52 @@ class ElementaryMathPractice
         // min <= integer <= max
 
         int num;
-        bool isInt;
-        int count = 0;
+        bool isInt = true;
 
         do
         {
             Console.Write(prompt);
             isInt = int.TryParse(Console.ReadLine(), out num);
-            count += 2;
-            if(!isInt || (min != null && num < min) || (max != null && num > max))
+            if (!isInt || (min != null && num < min) || (max != null && num > max))
             {
                 Console.WriteLine($"\nEnter a valid integer in range[{(min == null ? int.MinValue : min)},{(max == null ? int.MaxValue : max)}]");
-                count += 1;
             }
         }
         while(!isInt || (min != null && num < min) || (max != null && num > max));
 
         return num;
+    }
+    
+
+    static (string value, int intValue) GetIntOrExit(string prompt, int? min=null, int? max=null)
+    {
+        // Method to return "Exit" string if ReadLine() returns "Exit"
+        // Or return integer if ReadLine() is integer
+        // Or repeat
+        // min <= integer <= max
+
+        int num;
+        bool isInt;
+        string userInput;
+
+        do
+        {
+            Console.Write(prompt);
+            userInput = Console.ReadLine() ?? "";
+            if (userInput.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return ("exit", 0);
+            }
+
+            isInt = int.TryParse(userInput, out num);
+            if (!isInt || (min != null && num < min) || (max != null && num > max))
+            {
+                Console.WriteLine($"\nEnter a valid integer in range[{(min == null ? int.MinValue : min)},{(max == null ? int.MaxValue : max)}]");
+            }
+        }
+        while (!isInt || (min != null && num < min) || (max != null && num > max));
+
+        return ("", num);
     }
 
 
@@ -58,19 +87,19 @@ class ElementaryMathPractice
         // Method to choose certain math operation to practice like:
         // addition
 
-        while(true)
+        while (true)
         {
             Console.WriteLine("Program to practice elementary math like addition.");
-            Console.WriteLine("1. Addition");
+            Console.WriteLine("1. Addition and subtraction");
             int choice = GetInt("", 1, 1);
 
             Console.Clear();
 
-            switch(choice)
+            switch (choice)
             {
                 case 1:
                     {
-                        PracticeAddition(); 
+                        PracticeAddition();
                         break;
                     }
                 default:
@@ -96,8 +125,13 @@ class ElementaryMathPractice
             Console.WriteLine("Choose type of addition practice:");
             Console.WriteLine("1. Sum two 2-digit +ve integers.");
             Console.WriteLine("2. Sum ten 2-digit +ve integers.");
-            Console.WriteLine("3. Back to main menu.");
-            int choice = GetInt("", 1, 3);
+            Console.WriteLine("3. Sum ten integers in range[1000, 99999]");
+            Console.WriteLine("4. Subtraction of integers in range[10, 99]");
+            Console.WriteLine("5. Subtraction of integers in range[10, 999]");
+            Console.WriteLine("6. Subtraction of integers in range[10, 9999]");
+            Console.WriteLine("7. Subtraction of integers in range[10, 99999]");
+            Console.WriteLine("8. Back to main menu.");
+            int choice = GetInt("", 1, 8);
             if(choice != previousChoice)
             {
                 previousChoice = choice;
@@ -109,16 +143,17 @@ class ElementaryMathPractice
             switch(choice)
             {
                 case 1:
-                    {
-                        StartTest(1);
-                        break;
-                    }
                 case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
                     {
-                        StartTest(2);
+                        StartTest(choice);
                         break;
                     }
-                case 3: return;
+                case 8: return;
                 default:
                     {
                         Console.WriteLine("Error!");
@@ -165,6 +200,31 @@ class ElementaryMathPractice
                             case 2:
                                 {
                                     StartSumTenTwoDigitNums(time);
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    StartSumTenBigIntegers(time);
+                                    break;
+                                }
+                            case 4:
+                                {
+                                    StartTestSubIntegers10To99(time);
+                                    break;
+                                }
+                            case 5:
+                                {
+                                    StartTestSubIntegers10To999(time);
+                                    break;
+                                }
+                            case 6:
+                                {
+                                    StartTestSubIntegers10To9999(time);
+                                    break;
+                                }
+                            case 7:
+                                {
+                                    StartTestSubIntegers10To99999(time);
                                     break;
                                 }
                             default:
@@ -221,7 +281,7 @@ class ElementaryMathPractice
     static void StartSumTwoTwoDigitNums(TimeSpan time)
     {
         // Method to run sum two 2-digit +ve integers until time runs out
-        // or user enters -1
+        // or user enters "exit"
 
         Random rng = new Random();
         Stopwatch stopwatch = new();
@@ -230,16 +290,208 @@ class ElementaryMathPractice
         while(stopwatch.Elapsed < time)
         {
             Console.WriteLine("Sum as many integers as you can before time runs out.");
-            Console.WriteLine("Enter -1 to exit prematurely");
+            Console.WriteLine("Enter \"exit\" to go back");
             PrintScoreBoard(time);
             Console.WriteLine();
             
             int n1 = rng.Next(10, 100);
             int n2 = rng.Next(10, 100);
             int sum = n1 + n2;
+
+            var (stringValue, userInput) = GetIntOrExit($"{n1} + {n2} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if(sum == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if(correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+    
+
+    static void StartTestSubIntegers10To99(TimeSpan time)
+    {
+        // Method to run subtract two 2-digit +ve integers until time runs out
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        
+        while(stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Subtract as many integers as you can before time runs out.");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
             
-            int userInput = GetInt($"{n1} + {n2} = ");
-            if(userInput == -1)
+            int n1 = rng.Next(10, 100);
+            int n2 = rng.Next(10, 100);
+            int sum = n1 - n2;
+
+            var (stringValue, userInput) = GetIntOrExit($"{n1} - {n2} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if(sum == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if(correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+
+
+    static void StartTestSubIntegers10To999(TimeSpan time)
+    {
+        // Method to run subtract two 2 to 3-digit +ve integers until time runs out
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        
+        while(stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Subtract as many integers as you can before time runs out.");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+            
+            int n1 = rng.Next(10, 1000);
+            int n2 = rng.Next(10, 1000);
+            int sum = n1 - n2;
+
+            var (stringValue, userInput) = GetIntOrExit($"{n1} - {n2} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if(sum == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if(correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+
+
+    static void StartTestSubIntegers10To9999(TimeSpan time)
+    {
+        // Method to run subtract two 2 to 4-digit +ve integers until time runs out
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        
+        while(stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Subtract as many integers as you can before time runs out.");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+            
+            int n1 = rng.Next(10, 10000);
+            int n2 = rng.Next(10, 10000);
+            int sum = n1 - n2;
+
+            var (stringValue, userInput) = GetIntOrExit($"{n1} - {n2} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if(sum == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if(correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+
+
+    static void StartTestSubIntegers10To99999(TimeSpan time)
+    {
+        // Method to run subtract two 2 to 5-digit +ve integers until time runs out
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        
+        while(stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Subtract as many integers as you can before time runs out.");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+            
+            int n1 = rng.Next(10, 100000);
+            int n2 = rng.Next(10, 100000);
+            int sum = n1 - n2;
+
+            var (stringValue, userInput) = GetIntOrExit($"{n1} - {n2} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
             {
                 Console.Clear();
                 break;
@@ -269,19 +521,19 @@ class ElementaryMathPractice
     static void StartSumTenTwoDigitNums(TimeSpan time)
     {
         // Method to run sum ten 2-digit +ve integers until time runs out
-        // or user enters -1
+        // or user enters "exit"
 
         Random rng = new Random();
         Stopwatch stopwatch = new();
         stopwatch.Start();
-        
-        while(stopwatch.Elapsed < time)
+
+        while (stopwatch.Elapsed < time)
         {
             Console.WriteLine("Sum as many integers as you can before time runs out.");
-            Console.WriteLine("Enter -1 to exit prematurely");
+            Console.WriteLine("Enter \"exit\" to go back");
             PrintScoreBoard(time);
             Console.WriteLine();
-            
+
             int n1 = rng.Next(10, 100);
             int n2 = rng.Next(10, 100);
             int n3 = rng.Next(10, 100);
@@ -293,9 +545,65 @@ class ElementaryMathPractice
             int n9 = rng.Next(10, 100);
             int n10 = rng.Next(10, 100);
             int sum = n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10;
+
+            var (stringValue, userInput) = GetIntOrExit($"{n1} + {n2} + {n3} + {n4} + {n5} + {n6} + {n7} + {n8} + {n9} + {n10} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if (sum == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+    
+
+    static void StartSumTenBigIntegers(TimeSpan time)
+    {
+        // Method to run sum ten 3 to 5-digit +ve integers until time runs out
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        
+        while(stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Sum as many integers as you can before time runs out.");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
             
-            int userInput = GetInt($"{n1} + {n2} + {n3} + {n4} + {n5} + {n6} + {n7} + {n8} + {n9} + {n10} = ");
-            if(userInput == -1)
+            int n2 = rng.Next(1000, 100000);
+            int n1 = rng.Next(1000, 100000);
+            int n3 = rng.Next(1000, 100000);
+            int n4 = rng.Next(1000, 100000);
+            int n5 = rng.Next(1000, 100000);
+            int n6 = rng.Next(1000, 100000);
+            int n7 = rng.Next(1000, 100000);
+            int n8 = rng.Next(1000, 100000);
+            int n9 = rng.Next(1000, 100000);
+            int n10 = rng.Next(1000, 100000);
+            int sum = n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10;
+
+            var (stringValue, userInput) = GetIntOrExit($"{n1} + {n2} + {n3} + {n4} + {n5} + {n6} + {n7} + {n8} + {n9} + {n10} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
             {
                 Console.Clear();
                 break;
@@ -334,7 +642,7 @@ class ElementaryMathPractice
         Console.Write("Test count: ".PadLeft(PAD_LEFT));
         Console.Write($"{totalTestCount}".PadRight(PAD_RIGHT));
         Console.Write("Max score%: ".PadLeft(PAD_LEFT));
-        Console.Write($"{maxCorrect/(double)maxCorrectCount:p2}");
+        Console.Write($"{maxCorrect / (double)maxCorrectCount:p2}");
         Console.WriteLine();
         Console.Write("Current score: ".PadLeft(PAD_LEFT));
         Console.Write($"{correctThisTest}/{attemptThisTest}".PadRight(PAD_RIGHT));
@@ -342,7 +650,7 @@ class ElementaryMathPractice
         Console.Write($"{averageCorrectPerTest}");
         Console.WriteLine();
         Console.Write("Current score%: ".PadLeft(PAD_LEFT));
-        Console.Write($"{correctThisTest/(double)attemptThisTest:p2}".PadRight(PAD_RIGHT));
+        Console.Write($"{correctThisTest / (double)attemptThisTest:p2}".PadRight(PAD_RIGHT));
         Console.Write("Average attempt/test: ".PadLeft(PAD_LEFT));
         Console.Write($"{averageAttemptPerTest}");
         Console.WriteLine();
