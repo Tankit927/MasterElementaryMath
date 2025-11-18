@@ -346,7 +346,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min=nul
             Console.WriteLine("1. Start test");
             Console.WriteLine("2. Change time");
             Console.WriteLine("3. Reset scores");
-            Console.WriteLine("4. Back to addition sub-menu");
+            Console.WriteLine("4. Back");
             int choice = GetInt("", 1, 4);
 
             Console.Clear();
