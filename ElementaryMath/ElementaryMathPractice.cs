@@ -80,9 +80,41 @@ class ElementaryMathPractice
 
         return ("", num);
     }
+    
+
+    static (string value, decimal decimalValue) GetDecimalOrExit(string prompt, decimal? min=null, decimal? max=null)
+    {
+        // Method to return "Exit" string if ReadLine() returns "Exit"
+        // Or return integer if ReadLine() is integer
+        // Or repeat
+        // min <= integer <= max
+
+        decimal num;
+        bool isDecimal;
+        string userInput;
+
+        do
+        {
+            Console.Write(prompt);
+            userInput = Console.ReadLine() ?? "";
+            if (userInput.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return ("exit", 0);
+            }
+
+            isDecimal = decimal.TryParse(userInput, out num);
+            if (!isDecimal || (min != null && num < min) || (max != null && num > max))
+            {
+                Console.WriteLine($"\nEnter a valid number in range[{(min == null ? decimal.MinValue : min)},{(max == null ? decimal.MaxValue : max)}]");
+            }
+        }
+        while (!isDecimal || (min != null && num < min) || (max != null && num > max));
+
+        return ("", num);
+    }
 
 
-static (string value, long longValue) GetLongOrExit(string prompt, long? min=null, long? max=null)
+static (string value, long longValue) GetLongOrExit(string prompt, long? min = null, long? max = null)
     {
         // Method to return "Exit" string if ReadLine() returns "Exit"
         // Or return integer if ReadLine() is integer
@@ -105,7 +137,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min=nul
             isLong = long.TryParse(userInput, out num);
             if (!isLong || (min != null && num < min) || (max != null && num > max))
             {
-                Console.WriteLine($"\nEnter a valid integer in range[{(min == null ? int.MinValue : min)},{(max == null ? int.MaxValue : max)}]");
+                Console.WriteLine($"\nEnter a valid integer in range[{(min == null ? long.MinValue : min)},{(max == null ? long.MaxValue : max)}]");
             }
         }
         while (!isLong || (min != null && num < min) || (max != null && num > max));
@@ -123,7 +155,11 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min=nul
             Console.WriteLine("Program to practice elementary math like addition.");
             Console.WriteLine("1. Addition and subtraction");
             Console.WriteLine("2. Multiplication");
-            int choice = GetInt("", 1, 2);
+            Console.WriteLine("3. Percentage calculation using percentage rule upto 1 decimal point without rounding");
+            Console.WriteLine("4. Ratio comparison");
+            Console.WriteLine("5. Multiplication table practice [12,19]");
+            Console.WriteLine("6. Practice squares upto 30");
+            int choice = GetInt("", 1, 6);
 
             Console.Clear();
 
@@ -137,6 +173,26 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min=nul
                 case 2:
                     {
                         ChooseMultiplicationType();
+                        break;
+                    }
+                case 3:
+                    {
+                        StartTest(14); // Percentage rule test is test 14
+                        break;
+                    }
+                case 4:
+                    {
+                        StartTest(15); // Ratio comparison test is test 15
+                        break;
+                    }
+                case 5:
+                    {
+                        StartTest(16); // Multiplication table practice is test 16
+                        break;
+                    }
+                case 6:
+                    {
+                        StartTest(17); // Practice squares is test 17
                         break;
                     }
                 default:
@@ -425,6 +481,26 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min=nul
                                     StartTestMultiplyingNumbersUsingPercentage(time);
                                     break;
                                 }
+                            case 14:
+                                {
+                                    StartTestPercentageCalculationUsingPercentageRule(time);
+                                    break;
+                                }
+                            case 15:
+                                {
+                                    StartTestRatioComparison(time);
+                                    break;
+                                }
+                            case 16:
+                                {
+                                    StartMultiplicationTableTest(time);
+                                    break;
+                                }
+                            case 17:
+                                {
+                                    StartPracticingSquares(time);
+                                    break;
+                                }
                             default:
                                 {
                                     Console.WriteLine("Error!");
@@ -460,6 +536,201 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min=nul
             }
         }
     }
+
+
+    static void StartPracticingSquares(TimeSpan time)
+    {
+        // Method to practice squares upto 30
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+
+        while (stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Practice squares upto 30");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+
+            int n1 = rng.Next(2, 30);
+            int square = (int)Math.Pow(n1, 2);
+
+            var (stringValue, userInput) = GetIntOrExit($"{n1}^2 = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if (square == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+    
+
+    static void StartMultiplicationTableTest(TimeSpan time)
+    {
+        // Method to practice tables [12,19]
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+
+        while (stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Practice tables [12,19]");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+
+            int n1 = rng.Next(12, 20);
+            int n2 = rng.Next(2, 10);
+            int product = n1 * n2;
+
+            var (stringValue, userInput) = GetIntOrExit($"{n1} x {n2} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if (product == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+    
+
+    static void StartTestRatioComparison(TimeSpan time)
+    {
+        // Method to practice finding greater ratio
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+
+        while (stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Type 1 if first ratio is greater or 2 if second is greater or 3 if both same");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+
+            int n1 = rng.Next(10, 1000);
+            int n2 = rng.Next(10, 1000);
+            int n3 = rng.Next(10, 1000);
+            int n4 = rng.Next(10, 1000);
+            decimal firstRatio = (decimal)n1 / n2;
+            decimal secondRatio = (decimal)n3 / n4;
+
+            var (stringValue, userInput) = GetIntOrExit($"First ratio = {n1}/{n2}\nSecond ratio = {n3}/{n4}\n");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if ((userInput == 1 && firstRatio > secondRatio) || (userInput == 2 && secondRatio > firstRatio) || (userInput == 3 && firstRatio == secondRatio))
+            {
+                correctThisTest += 1;
+            }
+
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+    
+
+    static void StartTestPercentageCalculationUsingPercentageRule(TimeSpan time)
+    {
+        // Method to practice percentage calculation using percentage rule
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+
+        while (stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Calculate percentage using percentage rule upto 1 decimal place without rounding");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+
+            int n1 = rng.Next(10, 1000);
+            int n2 = rng.Next(10, 1000);
+            decimal percent = ((decimal)n1 / n2) * 100;
+            percent = Math.Truncate(percent * 10) / 10;
+
+            var (stringValue, userInput) = GetDecimalOrExit($"({n1} / {n2})% = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if (percent == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
     
 
     static void StartTestMultiplyingNumbersUsingAdditions(TimeSpan time)
@@ -470,14 +741,14 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min=nul
         Random rng = new Random();
         Stopwatch stopwatch = new();
         stopwatch.Start();
-        
-        while(stopwatch.Elapsed < time)
+
+        while (stopwatch.Elapsed < time)
         {
             Console.WriteLine("Multiply numbers using additions");
             Console.WriteLine("Enter \"exit\" to go back");
             PrintScoreBoard(time);
             Console.WriteLine();
-            
+
             int n1 = rng.Next(10, 1000);
             int n2 = rng.Next(10, 1000);
             int product = n1 * n2;
@@ -490,12 +761,12 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min=nul
             }
 
             attemptThisTest += 1;
-            if(product == userInput)
+            if (product == userInput)
             {
                 correctThisTest += 1;
             }
 
-            if(correctThisTest > maxCorrect)
+            if (correctThisTest > maxCorrect)
             {
                 maxCorrect = correctThisTest;
                 maxCorrectCount = attemptThisTest;
