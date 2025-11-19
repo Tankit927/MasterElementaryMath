@@ -1356,7 +1356,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             
             int n1 = rng.Next(10, 100000);
             int n2 = rng.Next(10, 100000);
-            long product = n1 * n2;
+            long product = (long)n1 * n2;
 
             var (stringValue, userInput) = GetLongOrExit($"{n1} x {n2} = ");
             if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
