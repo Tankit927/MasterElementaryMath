@@ -8,6 +8,7 @@
 
 
 using System.Diagnostics;
+using System.IO.Pipes;
 
 class ElementaryMathPractice
 {
@@ -20,6 +21,26 @@ class ElementaryMathPractice
     static int averageAttemptPerTest = 0; // ((averageAttemptPerTest * (totalTestCount-1)) + AttemptThisTest) / totalTestCount
     static int maxCorrect = 0;
     static int maxCorrectCount = 0;
+
+    static decimal[,] inverseProportionalityTable =
+    {
+        {9.09m, -8.33m},
+        {10m, -9.09m},
+        {11.11m, -10m},
+        {12.5m, -11.11m},
+        {14.28m, -12.5m},
+        {16.66m, -14.28m},
+        {20m, -16.66m},
+        {25m, -20m},
+        {33.33m, -25m},
+        {50m, -33.33m},
+        {60m, -37.5m},
+        {66.66m, -40m},
+        {75m, -42.85m},
+        {100m, -50m},
+    };
+
+    static int[] fractionToPercentageTable = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 20, 25, 30, 40, 60 };
 
     static void Main()
     {
@@ -159,7 +180,10 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             Console.WriteLine("4. Ratio comparison");
             Console.WriteLine("5. Multiplication table practice [12,19]");
             Console.WriteLine("6. Practice squares upto 30");
-            int choice = GetInt("", 1, 6);
+            Console.WriteLine("7. Product constancy table or inverse proportionality table");
+            Console.WriteLine("8. Fraction to percentage conversion");
+            Console.WriteLine("9. Percentage to fraction conversion");
+            int choice = GetInt("", 1, 9);
 
             Console.Clear();
 
@@ -195,10 +219,69 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                         StartTest(17); // Practice squares is test 17
                         break;
                     }
+                case 7:
+                    {
+                        ChooseTypeOfInverseProportionality();
+                        break;
+                    }
+                case 8:
+                    {
+                        StartTest(20); // Fraction to percentage conversion is test 20
+                        break;
+                    }
+                case 9:
+                    {
+                        StartTest(21); // Percentage to fraction conversion is test 21
+                        break;
+                    }
                 default:
                     {
                         Console.WriteLine("Error!");
                         continue;
+                    }
+            }
+        }
+    }
+
+
+    static void ChooseTypeOfInverseProportionality()
+    {
+        // Method to choose type of inverse proportionality to practice
+
+        int previousChoice = 0;
+
+        while (true)
+        {
+            Console.WriteLine("Choose inverse proportionality order:");
+            Console.WriteLine("1. increase-decrease order");
+            Console.WriteLine("2. Any order");
+            Console.WriteLine("3. Back to main menu");
+            int choice = GetInt("", 1, 5);
+            if (choice != previousChoice)
+            {
+                previousChoice = choice;
+                ResetScore();
+            }
+
+            Console.Clear();
+
+            switch (choice)
+            {
+                case 1:
+                    {
+                        StartTest(18); // Increase-decrease order of inverse proportionality is test 18
+                        break;
+                    }
+                case 2:
+                    {
+                        StartTest(19); // Any order of inverse proportionality is test 19
+                        break;
+                    }
+                case 3: return;
+                default:
+                    {
+                        Console.WriteLine("Error!");
+                        break;
                     }
             }
         }
@@ -501,6 +584,26 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                                     StartPracticingSquares(time);
                                     break;
                                 }
+                            case 18:
+                                {
+                                    IncreaseDecreaseOrderOfInverseProportionality(time);
+                                    break;
+                                }
+                            case 19:
+                                {
+                                    AnyOrderOfInverseProportionality(time);
+                                    break;
+                                }
+                            case 20:
+                                {
+                                    StartFractionToPercentageConversionTest(time);
+                                    break;
+                                }
+                            case 21:
+                                {
+                                    StartPercentageToFractionConversionTest(time);
+                                    break;
+                                }
                             default:
                                 {
                                     Console.WriteLine("Error!");
@@ -535,6 +638,268 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                     }
             }
         }
+    }
+    
+
+    static void StartFractionToPercentageConversionTest(TimeSpan time)
+    {
+        // Method to practice fraction to percentage conversion
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        int len = fractionToPercentageTable.Length;
+        int dIndex = 1, nIndex = 0;
+
+        while (stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Fraction to percentage conversion exercise (2 decimal places without rounding)");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+            do
+            {
+                dIndex = rng.Next(1, len);
+            }
+            while (fractionToPercentageTable[dIndex] == 10);
+            do
+            {
+                nIndex = rng.Next(0, dIndex);
+            }
+            while (!IsCoprime(fractionToPercentageTable[dIndex], fractionToPercentageTable[nIndex]));
+
+            decimal percentValue = ((decimal)fractionToPercentageTable[nIndex] / fractionToPercentageTable[dIndex]) * 100;
+            percentValue = Math.Truncate(percentValue * 100) / 100;
+
+            var (stringValue, userInput) = GetDecimalOrExit($"{fractionToPercentageTable[nIndex]} / {fractionToPercentageTable[dIndex]} = ");
+
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+            attemptThisTest += 1;
+            if (userInput == percentValue)
+            {
+                correctThisTest += 1;
+            }
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+
+
+    static void StartPercentageToFractionConversionTest(TimeSpan time)
+    {
+        // Method to practice percentage to fraction conversion
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        int len = fractionToPercentageTable.Length;
+        int dIndex = 1, nIndex = 0;
+
+        while (stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Percentage to Fraction conversion exercise");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+            do
+            {
+                dIndex = rng.Next(1, len);
+            }
+            while (fractionToPercentageTable[dIndex] == 10);
+            do
+            {
+                nIndex = rng.Next(0, dIndex);
+            }
+            while (!IsCoprime(fractionToPercentageTable[dIndex], fractionToPercentageTable[nIndex]));
+
+            decimal percentValue = ((decimal)fractionToPercentageTable[nIndex] / fractionToPercentageTable[dIndex]) * 100;
+            percentValue = Math.Truncate(percentValue * 100) / 100;
+
+            Console.WriteLine(percentValue);
+
+            var (stringValue, userInputNumerator) = GetIntOrExit($"Numerator = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            var (stringValue2, userInputDenominator) = GetIntOrExit($"Denominator = ");
+            if (stringValue2.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+            
+            attemptThisTest += 1;
+            if (userInputNumerator == fractionToPercentageTable[nIndex] && userInputDenominator == fractionToPercentageTable[dIndex])
+            {
+                correctThisTest += 1;
+            }
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+
+
+    static int GCD(int n1, int n2)
+    {
+        // Method to calculate GCD of two given +ve integers
+
+        n1 = Math.Abs(n1);
+        n2 = Math.Abs(n2);
+
+        if (n1 < n2)
+        {
+            int temp = n1;
+            n1 = n2;
+            n2 = temp;
+        }
+
+        while (n2 > 0)
+        {
+            int r = n1 % n2;
+            n1 = n2;
+            n2 = r;
+        }
+
+        return n1;
+    }
+
+
+    static bool IsCoprime(int n1, int n2)
+    {
+        // Method to determine whether given two integers are coprime or not
+
+        if (GCD(n1, n2) == 1)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    static void IncreaseDecreaseOrderOfInverseProportionality(TimeSpan time)
+    {
+        // Method to practice inverse proportionality
+        // Given A --> B +x%
+        // Find B --> A
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        int rows = inverseProportionalityTable.GetLength(0);
+
+        while (stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Inverse proportionality exercise");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+
+            int row = rng.Next(0, rows);
+            Console.WriteLine($"A --> B {inverseProportionalityTable[row, 0]}");
+
+            var (stringValue, userInput) = GetDecimalOrExit("B --> A = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if (userInput == inverseProportionalityTable[row, 1])
+            {
+                correctThisTest += 1;
+            }
+
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+
+
+    static void AnyOrderOfInverseProportionality(TimeSpan time)
+    {
+        // Method to practice inverse proportionality in any order
+        // Given A --> B +-x%
+        // Find B --> A
+        // or user enters "exit"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        stopwatch.Start();
+        int rows = inverseProportionalityTable.GetLength(0);
+
+        while (stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Inverse proportionality exercise");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+
+            int row = rng.Next(0, rows);
+            int col = rng.Next(0, 2);
+            Console.WriteLine($"A --> B {inverseProportionalityTable[row, col]}");
+
+            var (stringValue, userInput) = GetDecimalOrExit("B --> A = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if (userInput == inverseProportionalityTable[row,Math.Abs(col-1)])
+            {
+                correctThisTest += 1;
+            }
+
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
     }
 
 
