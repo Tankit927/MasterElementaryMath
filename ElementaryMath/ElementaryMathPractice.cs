@@ -8,7 +8,8 @@
 
 
 using System.Diagnostics;
-using System.IO.Pipes;
+
+public record OWS(string description, string word); // One word substitution blueprint
 
 class ElementaryMathPractice
 {
@@ -41,6 +42,243 @@ class ElementaryMathPractice
     };
 
     static int[] fractionToPercentageTable = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 20, 25, 30, 40, 60 };
+
+    private static readonly List<OWS> owsList =
+        [
+            // One word substitution list Top 200
+            // Order is as given in BlackBook keeping synonyms are together
+            // Description, word
+            new("A person who loves all mankind", "Philanthropist"),
+            new("Someone who freely money and help to people who need it", "Philanthropist"),            
+            new("Someone who freely money and help to people who need it", "Altruist"),            
+            new("Someone who make charitable donations intended to the welfare of other people", "Altruist"),
+            new("Someone who make charitable donations intended to the welfare of other people", "Philanthropist"),
+            new("An inscripton on a tombstone in the memory of the person who has died", "Epitaph"),
+            new("Something no longer in use", "Obsolete"),
+            new("Handwriting which is difficult or impossible to read", "Illegible"),
+            new("Something that cannot be avoided", "Inevitable"),
+            new("Certain to happen", "Inevitable"),
+            new("A place for keeping the birds in a confined space", "Aviary"),
+            new("Belonging to the same time", "Contemporary"),
+            new("A person living in the same age as another", "Contemporary"),
+            new("A person who can endure pain and hardship without showing his feelings/complaining", "Stoic"),
+            new("One who doesn't believe in the existence of God", "Atheist"),
+            new("A person who draw or make maps", "Cartographer"),
+            new("An extreme fear of being in a small confined space", "Claustrophobia"),
+            new("One who knows everything", "Omniscient"),
+            new("A solution for all difficulties or diseases", "Panacea"),
+            new("A person who knows and is able to use several languages", "Polyglot"),
+            new("An arrangement of events or dates in order of their occurrence", "Chronology"),
+            new("A speech or presentation made without previous preparation", "Extempore"),
+            new("One who is difficult to please", "Fastidious"),
+            new("An imagined society where everything is perfect and everyone is happy", "Utopia"),
+            new("A place of ideal perfection especially in laws, government, and social conditions", "Utopia"),
+            new("One who plays for pleasure rather than as a profession", "Amateur"),
+            new("A person who is neither well experienced nor professional", "Amateur"),
+            new("A non-professional who is inept in a particular activity", "Amateur"),
+            new("Able to use left and right hand equally well", "Ambidextrous"),
+            new("A person who attacks or criticizes cherished beliefs or institutions", "Iconoclast"),
+            new("One who cannot make mistake", "Infallible"),
+            new("The place where public, government or historical records are kept", "Archive"),
+            new("A person who love or collect books", "Bibliophile"),
+            new("The murder of a whole race or a group of people", "Genocide"),
+            new("A sound that cannot be heard", "Inaudible"),
+            new("One who cannot be corrected", "Incorrigible"),
+            new("One who is beyond reform", "Incorrigible"),
+            new("A person who writes or edits dictionaries", "Lexicographer"),
+            new("Someone working or acting merely for money or other rewards", "Mercenary"),
+            new("A soldier who fights for the sake of money", "Mercenary"),
+            new("A person who hates and avoids other people", "Misanthrope"),
+            new("Sentimental longing for a period in the past", "Nostalgia"),
+            new("Animal that can live both on land and in water", "Amphibians"),
+            new("The life history of a person written by himself", "Autobiography"),
+            new("A person who eats human flesh", "Cannibal"),
+            new("A person employed to drive a private or hired car", "Chauffeur"),
+            new("The scientific study of worms and insects", "Entomology"),
+            new("One who is unable to pay debts", "Insolvent"),
+            new("One who is unable to pay debts", "Bankrupt"),
+            new("A person with strong desire to steal", "Kleptomania"),
+            new("Government or rule by a small group of people", "Oligarchy"),
+            new("One who is all powerful", "Omnipotent"),
+            new("A person who collect or study stamps", "Philatelist"),
+            new("A person who never takes alcoholic drinks", "Teetotaller"),
+            new("Someone having many skills", "Versatile"),
+            new("A person who believes that laws and governments are not necessary", "Anarchist"),
+            new("A person who believes in or tries to bring about a state of lawlessness", "Anarchist"),
+            new("The art of beautiful handwriting", "Calligraphy"),
+            new("A group of stars that forms a shape in the sky and has a name", "Constellation"),
+            new("An animal that lives in groups", "Gregarious"),
+            new("Tending to associate with others of one's kind", "Gregarious"),
+            new("A quiet person who is more interested in his own thoughts and feelings than in spending time with other people", "Introvert"),
+            new("A piece of land/garden in which fruit trees are grown", "Orchard"),
+            new("Fit to drink water", "Potable"),
+            new("A person who helps another to commit a crime or to do something morally wrong", "Accomplice"),
+            new("A partner in crime", "Accomplice"),
+            new("One who is not sure about God's existence", "Agnostic"),
+            new("A partial or total loss of memory", "Amnesia"),
+            new("A situation in a country, an organization, etc. in which there is no government, order/control", "Anarchy"),
+            new("A person who regards the whole world as his country", "Cosmopolitan"),
+            new("One who is a citizen not of a country but of the world", "Cosmopolitan"),
+            new("A person who leaves his country to live in another", "Emigrant"),
+            new("Lasting for a very short time", "Ephemeral"),
+            new("To free somebody from all blame", "Exonerate"),
+            new("One who is easily deceived", "Gullible"),
+            new("Holding an office without receiving a pay", "Honorary"),
+            new("A person who suffers from an imaginary illness", "Hypochondriac"),
+            new("A person who is abnormally anxious about his health", "Hypochondriac"),
+            new("A person pretending to be somebody he isn't", "Hypocrite"),
+            new("That which cannot be conquered", "Invincible"),
+            new("A place where money is coined by authority of the government", "Mint"),
+            new("A person who admires himself/herself too much, especially his appearance", "Narcissist"),
+            new("Well known for being bad", "Notorious"), 
+            new("A person of evil reputation", "Notorious"),
+            new("A person who collects coins", "Numismatist"),
+            new("A large number of fish swimming together", "Shoal"),
+            new("A place where bees are kept", "Apiary"),
+            new("A military structure where arms and ammunition and other military equipment are stored", "Arsenal"),
+            new("The story of a person's life written by somebody else", "Biography"),
+            new("House or shelter of a gipsy", "Caravan"), 
+            new("A group of people, especially traders or pilgrims, travelling together across a desert", "Caravan"),
+            new("A man who knows a lot about things like food, music and art", "Connoisseur"),
+            new("Man behaving more like a woman than as a man", "Effeminate"),
+            new("A poem that express lament for the dead", "Elegy"),
+            new("A short speech at the end of a play", "Epilogue"),
+            new("A person who believes that all events are predetermined or subject to fate", "Fatalist"),
+            new("A person who sells and arranges cut flowers", "Florist"),
+            new("Extreme fear of wate", "Hydrophobia"),
+            new("A plan of a journey, including the route and the places that will be visited", "Itinerary"),
+            new("A copy of a book, piece of music, etc. before it has been printed", "Manuscript"), 
+            new("A paper written by hand", "Manuscript"),
+            new("A person who dislikes woman", "Misogynist"),
+            new("A person who walks on foot and not travelling in a vehicle", "Pedestrian"),
+            new("A person who always expects bad things to happen or something not to be successful", "Pessimist"),
+            new("Occuring or coming into existence after a person's death", "Posthumous"),
+            new("The murder of a king", "Regicide"),
+            new("Someone who walks about in sleep", "Somnambulist"),
+            new("The scientific study of sound", "Acoustics"),
+            new("Money paid to former wife, husband or partner when the marriage is ended", "Alimony"),
+            new("The study of human race, especially of its origin, development, customs and beliefs", "Anthropology"),
+            new("A glass tank where fish and water plants are kept", "Aquarium"),
+            new("A person who is chosen to settle a disagreement", "Arbitrator"), 
+            new("A person appointed by two parties to resolve a dispute", "Arbitrator"),
+            new("The study of human history and prehistory through the excavation of sites", "Archaeology"),
+            new("A government by the nobles", "Aristocracy"), 
+            new("Government by person of highest social order", "Aristocracy"), 
+            new("Hard but easily broken", "Brittle"), 
+            new("Liable to break easily", "Brittle"),
+            new("An assembly of worshippers", "Congregation"), 
+            new("A group of people who have come together in a religious building for worship and prayer", "Congregation"),
+            new("A keeper or custodian of a museum or other collection", "Curator"),
+            new("The scientific study of skin diseases", "Dermatology"),
+            new("Causing or ending in death", "Fatal"),
+            new("One who eats too much", "Glutton"),
+            new("A person who cannot read or write", "Illiterate"),
+            new("The condition of being unable to sleep over a period of time", "Insomnia"),
+            new("A person who supervises during an examination", "Invigilator"),
+            new("That through which light cannot pass", "Opaque"),
+            new("Violation of something holy or sacred", "Sacrilege"),
+            new("A speech made to oneself", "Soliloquy"),
+            new("One who lends money on high rates of interest", "Usurer"),
+            new("One who offers one's services without being forced", "Volunteer"),
+            new("To give up one's authority or throne", "Abdicate"),
+            new("A publication containing astronomical or meteorological annual calendar that contains important dates and time", "Almanac"),
+            new("Capable of being understood in either of two or more possible senses, and therefore not definite", "Ambiguous"),
+            new("Whose names are not known", "Anonymous"), 
+            new("An unknown author", "Anonymous"),
+            new("A person who renounces a religious or political belief or principle", "Apostate"),
+            new("One who makes official examination of accounts/financial records", "Auditor"),
+            new("A person who can speak only two languages", "Bilingual"),
+            new("Words uttered impiously about God", "Blasphemy"),
+            new("The act of speaking irreverently about sacred things", "Blasphemy"),
+            new("The scientific study of plants and their structure", "Botany"),
+            new("An arrangement of flowers that is usually given as a present", "Bouquet"),
+            new("A person that one work with at the same place, in a profession or a business", "Colleague"),
+            new("Gradual recovery of health and strength", "Convalescence"),
+            new("A person who readily believes others", "Credulous"), 
+            new("A doctor who studies and treats skin diseases", "Dermatologist"),
+            new("A thing fit to be eaten", "Edible"),
+            new("Widespread outbreak of a disease that affects large populations at the same time", "Epidemic"),
+            new("A person filled with excessive and single minded zeal, especially for an extreme religious or political cause", "Fanatic"),
+            new("The plants and vegetation of a particular region", "Flora"),
+            new("A person who has escaped from captivity or is in hiding", "Fugitive"),
+            new("The study of Earth, including the origin and history of the rocks and soil of which the earth is made", "Geology"),
+            new("That which cannot be believed", "Incredible"),
+            new("Incapable of feeling tired or exhausted", "Indefatigable"),
+            new("That can burn/catch fire easily", "Inflammable"),
+            new("That which cannot be called back", "Irrevocable"),
+            new("Giving undue favours to one's own kith and kin", "Nepotism"),
+            new("A person who is new to a profession without training or experience in a skill or subject", "Novice"),
+            new("The study or collection of coins", "Numismatics"),
+            new("A notice of a person's death", "Obituary"),
+            new("One who see bright side of things", "Optimist"),
+            new("A person who opposes war or use of military force", "Pacifist"),
+            new("A person who does not like, understand or enjoy the beauty of art, literature, music, etc.", "Philistine"),
+            new("Stealing of ideas or writings of someone else", "Plagiarism"),
+            new("Government by the richest people of a country", "Plutocracy"),
+            new("The scientific study of mind and how it influences behaviour", "Psychology"),
+            new("A person who withdraws from the world to live in seclusion and often in solitude", "Recluse"),
+            new("A close fitting cover for a sword or knife", "Sheath"), 
+            new("Cover for the blade of a weapon or tool", "Sheath"),
+            new("Something kept as a reminder of an event", "Souvenir"),
+            new("In exactly the same words as were used originally", "Verbatim"),
+            new("A person who is long experienced or practiced in an activity", "Veteran"),
+            new("A decorative ring of flowers and leaves", "Wreath"),
+            new("Fear of great heights", "Acrophobia"),
+            new("Concerned with beauty or the appreciation of beauty", "Aesthetic"),
+            new("A list of item to be discussed at a meeting", "Agenda"),
+            new("Medicine to nullify the effect of poison or other medicine", "Antidote"),
+            new("Animals and plants growing or living in or near water", "Aquatic"),
+            new("One who denies oneself ordinary bodily pleasures", "Ascetic"),
+            new("A person engaged in or trained for spaceflight", "Astronaut"),
+            new("The scientific study of celestial bodies like sun, moon, stars, planets, etc.", "Astronomy"),
+            new("A doctor who specializes in the study and treatment of heart diseases", "Cardiologist"),
+            new("Animals that eat meat", "Carnivorous"),
+            new("A place where gambling games are played", "Casino"),
+            new("A list or collection of books or informative graphics", "Catalogue"),
+            new("A funeral procession", "Cortege"),
+            new("Centre of attraction", "Cynosure"),
+            new("A leader who sways his followers by his oratory", "Demagogue"),
+            new("The study of population and its dynamics", "Demography"),
+            new("A large bedroom for a number of people in a school or institution", "Dormitory"),
+            new("A game in which no one wins", "Draw"),
+            new("A book or set of books giving information about all areas of knowledge", "Encyclopedia"),
+            new("Murder of one's brother or sister", "Fratricide"),
+            new("A very small village", "Hamlet"),
+            new("A building in which aircraft are housed", "Hangar"),
+            new("All(things or people) of the same or similar kind or nature", "Homogeneous"),
+            new("That which cannot be satisfied", "Insatiable"),
+            new("Someone who is killed fighting for the cause of religion or faith", "Martyr"),
+            new("A place for keeping dead bodies before burial or cremation", "Mortuary"),
+            new("Present everywhere", "Omnipresent"),
+            new("The scientific study of birds", "Ornithology"),
+            new("A fictitious name especially one assumed by an author", "Pseudonym"),
+            new("Dress with medals, ribbons worn at offical ceremony, symbols of royalty", "Regalia"),
+            new("A person very reserved in speech", "Reticent"),
+            new("One who helps a person in need", "Samaritan"),
+            new("An office with high salary but no work", "Sinecure"),
+            new("The study of the nature of God and religious beliefs", "Theology"), 
+            new("The study of religion", "Theology"),
+            new("A place where animals are slaughtered for consumption as food", "Abattoir"),
+            new("An official pardon", "Amnesty"), 
+            new("The formal act of liberating someone", "Amnesty"),
+            new("A system of government of a country in which one person has complete power", "Autocracy"),
+            new("A large bundle bound for storage or transport", "Bale"),
+            new("An instrument used for measuring atmospheric pressure", "Barometer"),
+            new("A group of girls/boys/birds, etc.", "Bevy"),
+            new("A list of books referred to in a scholarly work", "Bibliography"),
+            new("A government run by officials in a state", "Bureaucracy"),
+            new("Harsh or discordant sound", "Cacophony"), 
+            new("Loud confusing disagreeable sounds", "Cacophony"), 
+            new("An incongruous or chaotic mixture", "Cacophony"),
+            new("A person skilled at producing beautiful handwriting", "Calligrapher"),
+            new("The art or process of drawing or making maps", "Cartography"),
+            new("One who plans the steps and moves in a dance", "Choreographer"),
+            new("Easily spread from one person to another", "Contagious"),
+            new("A disease which spreads with contact", "Contagious"),
+            new("One who sneers at the aims and beliefs of his fellow men", "Cynic"),
+            new("A person who believes that only selfishness motivates human actions", "Cynic"),
+            new("A system of government in which all the people of a country can vote to elect their representatives", "Democracy"),
+        ];
 
     static void Main()
     {
@@ -183,7 +421,8 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             Console.WriteLine("7. Product constancy table or inverse proportionality table");
             Console.WriteLine("8. Fraction to percentage conversion");
             Console.WriteLine("9. Percentage to fraction conversion");
-            int choice = GetInt("", 1, 9);
+            Console.WriteLine("10. One word substitutions (Top 200)");
+            int choice = GetInt("", 1, 10);
 
             Console.Clear();
 
@@ -232,6 +471,11 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                 case 9:
                     {
                         StartTest(21); // Percentage to fraction conversion is test 21
+                        break;
+                    }
+                case 10:
+                    {
+                        StartTest(22); // Top 200 one word substitutions test
                         break;
                     }
                 default:
@@ -604,6 +848,11 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                                     StartPercentageToFractionConversionTest(time);
                                     break;
                                 }
+                            case 22:
+                                {
+                                    Start200OneWordSubstitutionTest(time);
+                                    break;
+                                }
                             default:
                                 {
                                     Console.WriteLine("Error!");
@@ -749,6 +998,66 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             if (userInputNumerator == fractionToPercentageTable[nIndex] && userInputDenominator == fractionToPercentageTable[dIndex])
             {
                 correctThisTest += 1;
+            }
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+            Console.Clear();
+        }
+
+        stopwatch.Stop();
+        stopwatch.Reset();
+        return;
+    }
+
+
+    static void Start200OneWordSubstitutionTest(TimeSpan time)
+    {
+        // Method to practice top 200 one word substitutions
+        // or user enters "-1"
+
+        Random rng = new Random();
+        Stopwatch stopwatch = new();
+        int len = owsList.Count;
+        Lookup<string, string> owsLookup = (Lookup<string, string>)owsList.ToLookup(s => s.description, s => s.word);
+        stopwatch.Start();
+
+        while (stopwatch.Elapsed < time)
+        {
+            Console.WriteLine("Top 200 one word substitutions");
+            Console.WriteLine("Enter \"-1\" to go back");
+            PrintScoreBoard(time);
+            Console.WriteLine();
+            
+            OWS my_ows = owsList[rng.Next(0, len)];
+            string key = my_ows.description;
+            Console.WriteLine(key);
+            string word = Console.ReadLine() ?? "";
+            word = word.Trim();
+
+            if (word.Equals("-1", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            List<string> words = owsLookup[key].ToList();
+            
+            attemptThisTest += 1;
+            if (words.Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            {
+                correctThisTest += 1;
+            }
+            else
+            {
+                foreach(string s in words)
+                {
+                    Console.WriteLine(s);
+                }
+
+                Thread.Sleep(3000);
             }
             if (correctThisTest > maxCorrect)
             {
