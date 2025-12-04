@@ -49,8 +49,8 @@ class ElementaryMathPractice
             // Order is as given in BlackBook keeping synonyms are together
             // Description, word
             new("A person who loves all mankind", "Philanthropist"),
-            new("Someone who freely money and help to people who need it", "Philanthropist"),            
-            new("Someone who freely money and help to people who need it", "Altruist"),            
+            new("Someone who freely gives money and help to people who need it", "Philanthropist"),            
+            new("Someone who freely gives money and help to people who need it", "Altruist"),            
             new("Someone who make charitable donations intended to the welfare of other people", "Altruist"),
             new("Someone who make charitable donations intended to the welfare of other people", "Philanthropist"),
             new("An inscripton on a tombstone in the memory of the person who has died", "Epitaph"),
@@ -145,7 +145,7 @@ class ElementaryMathPractice
             new("A short speech at the end of a play", "Epilogue"),
             new("A person who believes that all events are predetermined or subject to fate", "Fatalist"),
             new("A person who sells and arranges cut flowers", "Florist"),
-            new("Extreme fear of wate", "Hydrophobia"),
+            new("Extreme fear of water", "Hydrophobia"),
             new("A plan of a journey, including the route and the places that will be visited", "Itinerary"),
             new("A copy of a book, piece of music, etc. before it has been printed", "Manuscript"), 
             new("A paper written by hand", "Manuscript"),
@@ -475,13 +475,57 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                     }
                 case 10:
                     {
-                        StartTest(22); // Top 200 one word substitutions test
+                        Top200OneWordSubstitutionSubMenu();
                         break;
                     }
                 default:
                     {
                         Console.WriteLine("Error!");
                         continue;
+                    }
+            }
+        }
+    }
+
+
+    static void Top200OneWordSubstitutionSubMenu()
+    {
+        // Method to choose timed or untimed complete test
+
+        int previousChoice = 0;
+
+        while (true)
+        {
+            Console.WriteLine("Choose type of one word substitution test:");
+            Console.WriteLine("1. Timed test");
+            Console.WriteLine("2. Complete test without time limit");
+            Console.WriteLine("3. Back to main menu");
+            int choice = GetInt("", 1, 3);
+            if (choice != previousChoice)
+            {
+                previousChoice = choice;
+                ResetScore();
+            }
+
+            Console.Clear();
+
+            switch (choice)
+            {
+                case 1:
+                    {
+                        StartTest(22); // Timed top 200 one word substitution test
+                        break;
+                    }
+                case 2:
+                    {
+                        StartTest(23); // Complete top 200 one word substitution test without time limit  
+                        break;
+                    }
+                case 3: return;
+                default:
+                    {
+                        Console.WriteLine("Error!");
+                        break;
                     }
             }
         }
@@ -500,7 +544,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             Console.WriteLine("1. increase-decrease order");
             Console.WriteLine("2. Any order");
             Console.WriteLine("3. Back to main menu");
-            int choice = GetInt("", 1, 5);
+            int choice = GetInt("", 1, 3);
             if (choice != previousChoice)
             {
                 previousChoice = choice;
@@ -850,7 +894,12 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                                 }
                             case 22:
                                 {
-                                    Start200OneWordSubstitutionTest(time);
+                                    StartTimed200OneWordSubstitutionTest(time);
+                                    break;
+                                }
+                            case 23:
+                                {
+                                    StartComplete200OneWordSubstitutionTest();
                                     break;
                                 }
                             default:
@@ -1013,7 +1062,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
     }
 
 
-    static void Start200OneWordSubstitutionTest(TimeSpan time)
+    static void StartTimed200OneWordSubstitutionTest(TimeSpan time)
     {
         // Method to practice top 200 one word substitutions
         // or user enters "-1"
@@ -1026,7 +1075,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
 
         while (stopwatch.Elapsed < time)
         {
-            Console.WriteLine("Top 200 one word substitutions");
+            Console.WriteLine("Top 200 one word substitutions, timed");
             Console.WriteLine("Enter \"-1\" to go back");
             PrintScoreBoard(time);
             Console.WriteLine();
@@ -1070,6 +1119,103 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
         stopwatch.Stop();
         stopwatch.Reset();
         return;
+    }
+
+
+    static void StartComplete200OneWordSubstitutionTest()
+    {
+        // Method to practice top 200 one word substitutions
+        // or user enters "-1"
+
+        List<OWS> randomized_owsList = RandomizeList(owsList); // Fill elements from owsList in randomized order
+        Lookup<string, string> owsLookup = (Lookup<string, string>)randomized_owsList.ToLookup(s => s.description, s => s.word);
+
+        foreach(OWS ows in randomized_owsList)
+        {
+            Console.WriteLine("Top 200 one word substitutions, unlimited time");
+            Console.WriteLine("Enter \"-1\" to go back");
+            PrintScoreBoard(TimeSpan.Zero);
+            Console.WriteLine();
+            
+            string key = ows.description;
+            Console.WriteLine(key);
+            string word = Console.ReadLine() ?? "";
+            word = word.Trim();
+
+            if (word.Equals("-1", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            List<string> words = owsLookup[key].ToList();
+            
+            attemptThisTest += 1;
+            if (words.Contains(word, StringComparer.InvariantCultureIgnoreCase))
+            {
+                correctThisTest += 1;
+            }
+            else
+            {
+                foreach(string s in words)
+                {
+                    Console.WriteLine(s);
+                }
+
+                Thread.Sleep(3000);
+            }
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+            Console.Clear();
+        }
+
+        return;
+    }
+
+
+    static List<OWS> RandomizeList(List<OWS> myList)
+    {
+        // Method to randomize the elements of given list into new list
+
+        List<OWS> newList = DuplicateList(myList);
+        int len = newList.Count;
+        Random rng = new();
+
+        for(int i = len-1; i > 0; i--)
+        {
+            Swap(newList, rng.Next(0,i+1), i);
+        }
+
+        return newList;
+    }
+
+
+    static void Swap(List<OWS> myList, int i, int j)
+    {
+        // Method to swap elements at given indices
+
+        OWS temp = myList[i];
+        myList[i] = myList[j];
+        myList[j] = temp;
+    }
+
+
+    static List<OWS> DuplicateList(List<OWS> oldList)
+    {
+        // Method to duplicate given list
+
+        int len = oldList.Count;
+        List<OWS> newList = new();
+
+        foreach(OWS ows in oldList)
+        {
+            newList.Add(ows);
+        }
+
+        return newList;
     }
 
 
