@@ -1,9 +1,9 @@
 A person who loves all mankind
 Philanthropist
 Someone who freely gives money and help to people who need it
-Philanthropist          
+Philanthropist
 Someone who freely gives money and help to people who need it
-Altruist            
+Altruist
 Someone who make charitable donations intended to the welfare of other people
 Altruist
 Someone who make charitable donations intended to the welfare of other people
@@ -163,7 +163,7 @@ Mint
 A person who admires himself/herself too much, especially his appearance
 Narcissist
 Well known for being bad
-Notorious 
+Notorious
 A person of evil reputation
 Notorious
 A person who collects coins
@@ -177,7 +177,7 @@ Arsenal
 The story of a person's life written by somebody else
 Biography
 House or shelter of a gipsy
-Caravan 
+Caravan
 A group of people, especially traders or pilgrims, travelling together across a desert
 Caravan
 A man who knows a lot about things like food, music and art
@@ -197,7 +197,7 @@ Hydrophobia
 A plan of a journey, including the route and the places that will be visited
 Itinerary
 A copy of a book, piece of music, etc. before it has been printed
-Manuscript 
+Manuscript
 A paper written by hand
 Manuscript
 A person who dislikes woman
@@ -221,21 +221,21 @@ Anthropology
 A glass tank where fish and water plants are kept
 Aquarium
 A person who is chosen to settle a disagreement
-Arbitrator 
+Arbitrator
 A person appointed by two parties to resolve a dispute
 Arbitrator
 The study of human history and prehistory through the excavation of sites
 Archaeology
 A government by the nobles
-Aristocracy 
+Aristocracy
 Government by person of highest social order
-Aristocracy 
+Aristocracy
 Hard but easily broken
 Brittle 
 Liable to break easily
 Brittle
 An assembly of worshippers
-Congregation 
+Congregation
 A group of people who have come together in a religious building for worship and prayer
 Congregation
 A keeper or custodian of a museum or other collection
@@ -269,7 +269,7 @@ Almanac
 Capable of being understood in either of two or more possible senses, and therefore not definite
 Ambiguous
 Whose names are not known
-Anonymous 
+Anonymous
 An unknown author
 Anonymous
 A person who renounces a religious or political belief or principle
@@ -291,7 +291,7 @@ Colleague
 Gradual recovery of health and strength
 Convalescence
 A person who readily believes others
-Credulous 
+Credulous
 A doctor who studies and treats skin diseases
 Dermatologist
 A thing fit to be eaten
@@ -392,7 +392,7 @@ A very small village
 Hamlet
 A building in which aircraft are housed
 Hangar
-All things or people  of the same or similar kind or nature
+All things or people of the same or similar kind or nature
 Homogeneous
 That which cannot be satisfied
 Insatiable
@@ -415,13 +415,13 @@ Samaritan
 An office with high salary but no work
 Sinecure
 The study of the nature of God and religious beliefs
-Theology 
+Theology
 The study of religion
 Theology
 A place where animals are slaughtered for consumption as food
 Abattoir
 An official pardon
-Amnesty 
+Amnesty
 The formal act of liberating someone
 Amnesty
 A system of government of a country in which one person has complete power
@@ -437,9 +437,9 @@ Bibliography
 A government run by officials in a state
 Bureaucracy
 Harsh or discordant sound
-Cacophony 
+Cacophony
 Loud confusing disagreeable sounds
-Cacophony 
+Cacophony
 An incongruous or chaotic mixture
 Cacophony
 A person skilled at producing beautiful handwriting

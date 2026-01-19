@@ -89,12 +89,12 @@ class ElementaryMathPractice
                     {
                         if(count % 2 == 1)
                         {
-                            description = line;
+                            description = line.Trim();
                             count += 1;
                         }
                         else
                         {
-                            word = line;
+                            word = line.Trim();
                             QA qa = new(description, word);
                             qaList.Add(qa);
                             count += 1;
@@ -124,12 +124,12 @@ class ElementaryMathPractice
                     {
                         if(count % 2 == 1)
                         {
-                            description = line;
+                            description = line.Trim();
                             count += 1;
                         }
                         else
                         {
-                            word = line;
+                            word = line.Trim();
                             QA qa = new(description, word);
                             qaList.Add(qa);
                             count += 1;
