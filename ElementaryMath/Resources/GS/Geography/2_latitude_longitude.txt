@@ -1,0 +1,220 @@
+Shape of Earth
+Geoid
+Shape of Earth
+Oblate Spheroid
+Earth's rotation time
+23hrs 56mins 4s
+Earth's revolution time
+365days 6hrs 9mins 9s
+Orbital speed of Earth
+29.8 km/s
+Planet with maximum orbital speed
+Mercury
+Planet with minimum orbital speed
+Neptune
+Point in Earth's orbit when it is closest to the Sun and date on which it occurs
+Perihelion, 3rd January
+Point in Earth's orbit when it is farthest from the Sun and date on which it occurs
+Aphelion, 4th July
+Point in Moon's orbit when it is closest to the Earth
+Perigee
+Point in Moon's orbit when it is farthest from the Earth
+Apogee
+Axial inclination of Earth in degrees
+23.5
+Orbital inclination of Earth in degrees
+66.5
+Horizontal geographical line that runs east to west
+Latitude
+Vertical geographical line that run north to south
+Longitude
+Total no. of latitudes
+181
+Distance between each latitudes
+111 km
+Equator
+0
+Tropic of Cancer
+23.5 N
+Tropic of Capricorn
+23.5 S
+Arctic Circle
+66.5 N
+Antarctic Circle
+66.5 S
+Places with same latidude
+Parallels
+Poles
+90 N/S
+Distance between which lines decreses when going from Equator to poles
+Longitude
+Maximum distance between longitudes in km
+111.32
+Minimum distance between longitudes in km
+0
+Total longitudes
+360
+Prime Meridian or International Meridian or Greenwich Meridian
+0
+Anti-Meridian or International Date Line
+180 E
+Prime Meridian passes through
+UK, France, Spain, Algeria, Mali, Burkina Faso, Togo, Ghana
+Every 15 degree longitude is how much time
+1 hr
+Every 1 degree longitude is how much time
+4 mins
+Moving east from Prime Meridian time ____
+Increases
+Moving west from Prime Meridian time ____
+Decreases
+Total time zones
+24
+No. of time zones of France
+13
+No. of time zones of Russia
+11
+No. of time zones of US
+6
+Which country has most time zones
+France
+When crossing International Date Line eastbound i.e. from East to West (eg: Japan to USA), the person ____ a day
+Gains
+Are all longitudes great circles?
+Yes
+Are all latitudes great circles?
+No
+Which latitude is great circles
+Equator
+What divides globe horizontally into Northern and Southern hemisphere
+Equator
+What divides globe vertically into Eastern and Western hemisphere
+Prime Meridian
+What divides globe vertically into Eastern and Western hemisphere
+International Meridian
+What divides globe vertically into Eastern and Western hemisphere
+Greenwich Meridian
+When and where Prime Meridian got adopted
+1 November, 1884 at International Meridian Conference in Washington DC, USA
+Astronomical event when sun reaches highest or lowest point in the sky, resulting in longest and shortest day of the year
+Solstice
+Astronomical event when sun's apparent path in the sky crosses the equator, making day and night approximately equal in length
+Equinox
+When is summer solstice (approx)
+21st June
+When is winter solstice (approx)
+22nd December
+What is longest day of year in Northern Hemisphere called and when it is
+Summer solstice, 21st June
+What is shortest day of year in Northern Hemisphere called and when it is
+Winter solstice, 22nd December
+When are rays of sun vertical on Tropic of Cancer
+Summer solstice
+When are rays of sun vertical on Tropic of Capricorn
+Winter solstice
+When is spring or vernal equinox (approx)
+21st March
+When is fall or autumnal equinox (approx)
+23rd September
+Period when North pole gets continuous sun rays
+spring equinox to autumnal equinox
+Period when North pole gets continuous sun rays
+spring equinox to fall equinox
+Period when North pole gets continuous sun rays
+vernal equinox to autumnal equinox
+Period when North pole gets continuous sun rays
+vernal equinox to fall equinox
+Period when North pole gets continuous sun rays
+21st March to 23rd September
+Period when South pole gets continuous sun rays
+autumnal equinox to spring equinox
+Period when South pole gets continuous sun rays
+autumnal equinox to vernal equinox
+Period when South pole gets continuous sun rays
+fall equinox to spring equinox
+Period when South pole gets continuous sun rays
+fall equinox to vernal equinox
+Period when South pole gets continuous sun rays
+23rd September to 21st March
+When Moon comes between Sun and Earth
+Solar Eclipse
+When Earth comes between Sun and Moon
+Lunar Eclipse
+What moon is on Solar Eclipse
+New moon (Amavasya)
+What moon is on Lunar Eclipse
+Full moon (Purnima)
+What causes red moon
+Refraction
+What happens when two full moons are in a single calendar month
+Blue Moon
+Types of solar eclipse
+Partial, annular, total
+What happens when Moon's orbit is closest to Earth during full moon
+Supermoon
+Perigee + Lunar Eclipse
+Supermoon
+When the Sun, Moon and Earth are all aligned in a straight line, the alignment in known as
+Syzygy
+Region between 23.5 N and 23.5 S
+Torrid Zone
+Region between 23.5 N - 66.5 N and 23.5 S - 66.5 S
+Temperate Zone
+Region beyond 66.5 N/S
+Frigid Zone
+Tides when Earth, Moon, Sun are perpendicular
+Neap tides
+Tides when Earth, Moon, Sun are in straight line
+Spring tides
+High tide is also called
+Flood tide
+Low tide is also called
+Ebb tide
+Types of tides based on frequency
+Semi diurnal (2 high, 2 low), diurnal (1 high, 1 low), mixed (varying height)
+Vertical wall of water rushing upstream
+Tidal Bore
+Favourable conditions for tidal bore
+Shallow river, narrow outlet into sea
+Where is India tidal bore occurs
+Hooghly river
+Where strongest tidal bore occurs
+Qiantang river, China
+Which river crosses equator twice and where
+Congo, Africa
+Which river in India cuts Tropic of Cancer twice
+Mahi
+Which river crosses Tropic of Capricorn twice and where
+Limpopo, South Africa
+Which longitude passes through Meghalaya, Bhutan and Bangladesh
+90 E
+IST longitude
+82.5 E
+IST passes through which city
+Mirzapur, Uttar Pradesh
+Time relation of IST with Prime Meridian
++5:30
+Coordinates of Itanagar, Arunachal Pradesh
+27 N 93 E
+Line joining places with same meteorological feature
+Isopleth
+Line joining points of equal travel time from common center
+Isochrones
+Line joining places of equal salinity
+Isohaline
+Line joining places of equal pressure-temperature
+Isonomal
+Line joining places of equal altitude
+Contours
+Line showing places with same slope
+Hachures
+Equator passes through which countries
+Ecuador, Colombia, Brazil, Sao Tome and Principe, Gabon, Republic of Congo, Democratic Replublic of Congo, Uganda, Kenya, Somalia, Maldives, Indonesia, Kiribati in Oceania
+Tropic of Cancer passes through which countries
+Mexico, Bahamas, Western Sahara, Mauritania, Mali, Algeria, Niger, Libya, Egypt, Saudi Arabia, UAE, Oman, India, Bangladesh, Myanmar, China, Taiwan
+Tropic of Cancer passes through which states in India
+Gujarat, Rajasthan, Madhya Pradesh, Chhattisgarh, Jharkhand, West Bengal, Tripura, Mizoram
+Tropic of Capricorn passes through which countries
+Chile, Argentina, Paraguay, Brazil, Namibia, Botswana, South Africa, Mozambique, Madagascar, Australia
+States through which IST passes
+Uttar Pradesh, Madhya Pradesh, Chhattisgarh, Odisha, Andhra Pradesh

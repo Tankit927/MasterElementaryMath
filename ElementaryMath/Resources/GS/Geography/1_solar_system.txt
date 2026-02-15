@@ -13,7 +13,7 @@ Milky Way
 Nearest galaxy
 Andromeda
 Where is our solar system located in Milky Way Galaxy
-Orion spur/arm
+Orion arm/spur
 When and who gave the Planetesimal theory of origin of solar system
 Thomas Chowder Chamberlin and Forest Ray Moulton in 1905
 Most widely accepted theory of origin of our solar system
@@ -55,7 +55,7 @@ Time taken by light to reach Earth from Sun
 1 Parsec is how many light years
 3.26
 Name planets and dwarf planets in increasing order of distance from sun
-Mercury, Venus, Earth, Mars, Ceres, Jupiter, Saturn, Uranus, Nepture, Pluto, Haumea, Makemake, Eris
+Mercury, Venus, Earth, Mars, Ceres, Jupiter, Saturn, Uranus, Neptune, Pluto, Haumea, Makemake, Eris
 Diameter of mercury
 4900 km
 Planet with no atmosphere
@@ -105,7 +105,7 @@ William Herschel, 1781
 Planet with coldest atmosphere
 Uranus
 No. of moons of Uranus
-27
+28
 Which planet is called rolling/lopsided planet due to 98 degree tilt of its axis
 Uranus
 Windiest planet
@@ -115,7 +115,7 @@ Neptune, Methane
 Which planet was found by mathematical predictions
 Neptune
 No. of satellites of Neptune
-14
+16
 Planets and dwarf planets in decreasing order of size
 Jupiter, Saturn, Uranus, Neptune, Earth, Venus, Mars, Mercury, Pluto, Eris, Makemake, Haumea, Ceres
 Thin gaseous envelope around the Moon is known as
@@ -137,7 +137,7 @@ Lagrange point
 Third Lunar exploration mission of Indian Space Research Organisation (ISRO)
 Chandrayan 3
 Lander, rover and point where Chandrayan 3 landed
-Vikram, Pragyaan, Shiv Shakti Point, near side of moon (Lunar South Pole)
+Vikram, Pragyan, Shiv Shakti Point, near side of moon (Lunar South Pole)
 Ring of bodies beyond Neptune
 Kuiper Belt
 Pluto was discovered by whom and when
@@ -159,9 +159,9 @@ Pulsar
 Two concentric rings of charged particles that surround the Earth
 Van Allen Radiation Belts
 Which two planets rotate East to West
-Uranus, Venus
+Venus, Uranus
 Planets with increasing order of rotation time
-jupiter 9.9hrs, Saturn 10.7hrs, Neptune 16hrs, Uranus 17hrs, Earth 23hrs 56m 6s, Mars 24.6hrs, Mercury 58.6days, Venus 243days
+Jupiter 9.9hrs, Saturn 10.7hrs, Neptune 16hrs, Uranus 17hrs, Earth 23hrs 56m 6s, Mars 24.6hrs, Mercury 58.6days, Venus 243days
 Planets in increasing order of revolution time
 Mercury 88 days, Venus 225 days, Earth 365.25 days, Mars 687 days, jupiter 11.86 years, Saturn 29.4 years, Uranus 84 years, Neptune 165 years
 Planets in decreasing order of density (g/cm^3)
@@ -200,3 +200,19 @@ Biggest moon of Neptune
 Triton
 Who landed of moon first and when
 Neil Armstrong, 1969
+Moon revolves in which direction (when seen from above the Earth's north pole)
+West to East
+Moon revolves in which direction (when seen from above the Earth's north pole)
+Anti-clockwise
+Moon rotates in which direction (when seen from above the north pole)
+Anti-clockwise
+Moon rotates in which direction (when seen from above the north pole)
+West to East
+Earth revolves in which direction around the sun (when seen from above the Sun's north pole)
+Anti-clockwise
+Earth revolves in which direction around the sun (when seen from above the Sun's north pole)
+West to East
+Earth rotate in which direction (when seen from above the north pole)
+Anti-clockwise
+Earth rotate in which direction (when seen from above the north pole)
+West to East
