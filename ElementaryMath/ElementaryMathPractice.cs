@@ -263,15 +263,16 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
     static void ChooseSubject()
     {
         // Method to choose subject to practice:
-        // Math, English, GS
+        // Math, English, Reasoning, Custom QA
 
         while (true)
         {
             Console.WriteLine("Choose subject to practice:");
             Console.WriteLine("1. Math");
             Console.WriteLine("2. English");
-            Console.WriteLine("3. Custom QA");
-            int choice = GetInt("", 1, 3);
+            Console.WriteLine("3. Reasoning");
+            Console.WriteLine("4. Custom QA");
+            int choice = GetInt("", 1, 4);
 
             Console.Clear();
 
@@ -288,6 +289,11 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                         break;
                     }
                 case 3:
+                    {
+                        ReasoningSubject();
+                        break;
+                    }
+                case 4:
                     {
                         CustomQA();
                         break;
@@ -350,12 +356,12 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             {
                 case 1:
                     {
-                        StartTest(24); // Timed custom QA test
+                        StartTest(25); // Timed custom QA test
                         break;
                     }
                 case 2:
                     {
-                        StartTest(25); // Unlimited time custom QA test
+                        StartTest(26); // Unlimited time custom QA test
                         break;
                     }
                 case 3:
@@ -473,6 +479,40 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                 case 1:
                     {
                         OneWordSubstitution();
+                        break;
+                    }
+                case 2:
+                    {
+                        return;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Error!");
+                        continue;
+                    }
+            }
+        }
+    }
+
+
+    static void ReasoningSubject()
+    {
+        // Method with list of things to practice in Reasoning:
+
+        while (true)
+        {
+            Console.WriteLine("Choose an item to practice in English:");
+            Console.WriteLine("1. Place value of English alphabet");
+            Console.WriteLine("2. Back");
+            int choice = GetInt("", 1, 2);
+
+            Console.Clear();
+
+            switch (choice)
+            {
+                case 1:
+                    {
+                        StartTest(24); // EnglishAlphabetPlaceValueTest();
                         break;
                     }
                 case 2:
@@ -942,10 +982,15 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                                 }
                             case 24:
                                 {
-                                    StartTimedCustomQA(time); //Start timed custom QA test
+                                    StartEnglishAlphabetPlaceValueTest();
                                     break;
                                 }
                             case 25:
+                                {
+                                    StartTimedCustomQA(time); //Start timed custom QA test
+                                    break;
+                                }
+                            case 26:
                                 {
                                     StartCompleteCustomQA(); 
                                     break;
@@ -1355,6 +1400,39 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
     }
 
 
+    static int[] RandomizeIntArray(int[] myArray)
+    {
+        // Method to randomize the elements of given int array into new int array
+
+        int[] randomizedArray = DuplicateIntArray(myArray);
+        int len = randomizedArray.Length;
+        Random rng = new();
+
+        for(int i = len-1; i > 0; i--)
+        {
+            SwapIntArrayElements(randomizedArray, rng.Next(0,i+1), i);
+        }
+
+        return randomizedArray;
+    }
+
+
+    static int[] DuplicateIntArray(int[] myArray)
+    {
+        // Method to duplicate int array
+
+        int len = myArray.Length;
+        int[] dArray = new int[len];
+
+        for(int i = 0; i < len; i++)
+        {
+            dArray[i] = myArray[i];
+        }
+
+        return dArray;
+    }
+
+
     static void Swap(List<QA> myList, int i, int j)
     {
         // Method to swap elements at given indices
@@ -1362,6 +1440,16 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
         QA temp = myList[i];
         myList[i] = myList[j];
         myList[j] = temp;
+    }
+
+
+    static void SwapIntArrayElements(int[] myArray, int i, int j)
+    {
+        // Method to swap elements at given indices
+
+        int temp = myArray[i];
+        myArray[i] = myArray[j];
+        myArray[j] = temp;
     }
 
 
@@ -2062,6 +2150,62 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
         stopwatch.Stop();
         stopwatch.Reset();
         return;
+    }
+
+
+    static void StartEnglishAlphabetPlaceValueTest()
+    {
+        // Method to run sum two 2-digit +ve integers until time runs out
+        // or user enters "exit"
+
+        string alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int len = alphabets.Length;
+        int[] myArray = new int[len];
+        InitIntArray(myArray);
+        int[] randArray = RandomizeIntArray(myArray);
+
+        for(int i = 0; i < len; i++)
+        {
+            Console.WriteLine("Write place value of English alphabet from left");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(TimeSpan.Zero);
+            Console.WriteLine();
+
+            var (stringValue, userInput) = GetIntOrExit($"{alphabets[randArray[i]-1]} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if(randArray[i] == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if(correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        return;
+    }
+
+
+    static void InitIntArray(int[] myArray)
+    {
+        // Method to initialize given array from 1 to Length
+
+        int len = myArray.Length;
+        for(int i = 0; i < len; i++)
+        {
+            myArray[i] = i+1;
+        }
     }
     
 
