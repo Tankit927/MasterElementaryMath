@@ -194,6 +194,37 @@ class ElementaryMathPractice
 
         return ("", num);
     }
+
+
+    static (string value, char charValue) GetCharOrExit(string prompt)
+    {
+        // Method to return "Exit" string if ReadLine() returns "Exit"
+        // Or return char if ReadLine() is char
+        // Or repeat
+
+        char myChar;
+        bool isChar;
+        string userInput;
+
+        do
+        {
+            Console.Write(prompt);
+            userInput = Console.ReadLine() ?? "";
+            if (userInput.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return ("exit", 'a');
+            }
+
+            isChar = char.TryParse(userInput, out myChar);
+            if (!isChar)
+            {
+                Console.WriteLine($"\nEnter a valid character");
+            }
+        }
+        while (!isChar);
+
+        return ("", myChar);
+    }
     
 
     static (string value, decimal decimalValue) GetDecimalOrExit(string prompt, decimal? min=null, decimal? max=null)
@@ -356,12 +387,12 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             {
                 case 1:
                     {
-                        StartTest(25); // Timed custom QA test
+                        StartTest(26); // Timed custom QA test
                         break;
                     }
                 case 2:
                     {
-                        StartTest(26); // Unlimited time custom QA test
+                        StartTest(27); // Unlimited time custom QA test
                         break;
                     }
                 case 3:
@@ -503,8 +534,9 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
         {
             Console.WriteLine("Choose an item to practice in English:");
             Console.WriteLine("1. Place value of English alphabet");
-            Console.WriteLine("2. Back");
-            int choice = GetInt("", 1, 2);
+            Console.WriteLine("2. Write opposite alphabet");
+            Console.WriteLine("3. Back");
+            int choice = GetInt("", 1, 3);
 
             Console.Clear();
 
@@ -516,6 +548,11 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                         break;
                     }
                 case 2:
+                    {
+                        StartTest(25); // EnglishOppositeAlphabetText();
+                        break;
+                    }
+                case 3:
                     {
                         return;
                     }
@@ -987,10 +1024,15 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                                 }
                             case 25:
                                 {
-                                    StartTimedCustomQA(time); //Start timed custom QA test
+                                    StartEnglishOppositeAlphabetTest();
                                     break;
                                 }
                             case 26:
+                                {
+                                    StartTimedCustomQA(time); //Start timed custom QA test
+                                    break;
+                                }
+                            case 27:
                                 {
                                     StartCompleteCustomQA(); 
                                     break;
@@ -2155,7 +2197,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
 
     static void StartEnglishAlphabetPlaceValueTest()
     {
-        // Method to run sum two 2-digit +ve integers until time runs out
+        // Method to run English alphabet place value test
         // or user enters "exit"
 
         string alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -2180,6 +2222,51 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
 
             attemptThisTest += 1;
             if(randArray[i] == userInput)
+            {
+                correctThisTest += 1;
+            }
+
+            if(correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
+        return;
+    }
+
+
+    static void StartEnglishOppositeAlphabetTest()
+    {
+        // Method to run English opposite alphabet test
+        // or user enters "exit"
+
+        string alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int len = alphabets.Length;
+        int[] myArray = new int[len];
+        InitIntArray(myArray);
+        int[] randArray = RandomizeIntArray(myArray);
+
+        for(int i = 0; i < len; i++)
+        {
+            Console.WriteLine("Write opposite of given English alphabet");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(TimeSpan.Zero);
+            Console.WriteLine();
+
+            var (stringValue, myChar) = GetCharOrExit($"{alphabets[randArray[i]-1]} = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            myChar = char.ToUpper(myChar);
+            attemptThisTest += 1;
+            if(26 - randArray[i] == alphabets.IndexOf(myChar))
             {
                 correctThisTest += 1;
             }
