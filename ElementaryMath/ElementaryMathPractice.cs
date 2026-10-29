@@ -28,6 +28,23 @@ public struct QA // one word question answer
     }
 }
 
+public struct TwoNums // Table nums like 12 x 2, etc.
+{
+    public int FirstNum;
+    public int SecondNum;
+
+    public TwoNums(int firstNum, int secondNum)
+    {
+        FirstNum = firstNum;
+        SecondNum = secondNum;
+    }
+
+    public override string ToString()
+    {
+        return $"{FirstNum} x {SecondNum}";
+    }
+}
+
 class ElementaryMathPractice
 {
     const int PAD_LEFT = 25;
@@ -57,8 +74,6 @@ class ElementaryMathPractice
         {75m, -42.85m},
         {100m, -50m},
     };
-
-    static readonly int[] fractionToPercentageTable = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 20, 25, 30, 40, 60 };
 
     static List<QA> qaList = new();
 
@@ -161,6 +176,24 @@ class ElementaryMathPractice
         while(!isInt || (min != null && num < min) || (max != null && num > max));
 
         return num;
+    }
+
+
+    static int GetIntOrZero(string prompt)
+    {
+        // Method to return integer or zero
+
+        int num;
+        bool isInt;
+
+        Console.Write(prompt);
+        isInt = int.TryParse(Console.ReadLine(), out num);
+        if(isInt)
+        {
+            return num;
+        }
+        
+        return 0;
     }
     
 
@@ -387,12 +420,12 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             {
                 case 1:
                     {
-                        StartTest(26); // Timed custom QA test
+                        StartTest(24); // Timed custom QA test
                         break;
                     }
                 case 2:
                     {
-                        StartTest(27); // Unlimited time custom QA test
+                        StartTest(25); // Unlimited time custom QA test
                         break;
                     }
                 case 3:
@@ -413,7 +446,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
     {
         // Method to choose certain math operation to practice like:
         // addition
-
+        int previousChoice = 0;
         while (true)
         {
             Console.WriteLine("Program to practice elementary math like addition.");
@@ -421,13 +454,19 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             Console.WriteLine("2. Multiplication");
             Console.WriteLine("3. Percentage calculation using percentage rule upto 1 decimal point without rounding");
             Console.WriteLine("4. Ratio comparison");
-            Console.WriteLine("5. Multiplication table practice [12,19]");
-            Console.WriteLine("6. Practice squares upto 30");
+            Console.WriteLine("5. Multiplication table practice");
+            Console.WriteLine("6. Practice squares 2-99");
             Console.WriteLine("7. Product constancy table or inverse proportionality table");
             Console.WriteLine("8. Fraction to percentage conversion");
-            Console.WriteLine("9. Percentage to fraction conversion");
+            Console.WriteLine("9. Cubes 2-49");
             Console.WriteLine("10. Back");
             int choice = GetInt("", 1, 10);
+
+            if(choice != previousChoice)
+            {
+                previousChoice = choice;
+                ResetScore();
+            }
 
             Console.Clear();
 
@@ -465,21 +504,22 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                     }
                 case 7:
                     {
-                        ChooseTypeOfInverseProportionality();
+                        StartTest(18); // Increase-decrease order of inverse proportionality is test 18
                         break;
                     }
                 case 8:
                     {
-                        StartTest(20); // Fraction to percentage conversion is test 20
+                        StartTest(19); // Fraction to percentage conversion is test 20
                         break;
                     }
                 case 9:
                     {
-                        StartTest(21); // Percentage to fraction conversion is test 21
+                        StartTest(26); // Cubes 2-49
                         break;
                     }
                 case 10:
                     {
+                        
                         return;
                     }
                 default:
@@ -530,6 +570,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
     {
         // Method with list of things to practice in Reasoning:
 
+        int previousChoice = 0;
         while (true)
         {
             Console.WriteLine("Choose an item to practice in English:");
@@ -538,18 +579,24 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             Console.WriteLine("3. Back");
             int choice = GetInt("", 1, 3);
 
+            if(choice != previousChoice)
+            {
+                previousChoice = choice;
+                ResetScore();
+            }
+
             Console.Clear();
 
             switch (choice)
             {
                 case 1:
                     {
-                        StartTest(24); // EnglishAlphabetPlaceValueTest();
+                        StartTest(22); // EnglishAlphabetPlaceValueTest();
                         break;
                     }
                 case 2:
                     {
-                        StartTest(25); // EnglishOppositeAlphabetText();
+                        StartTest(23); // EnglishOppositeAlphabetText();
                         break;
                     }
                 case 3:
@@ -628,12 +675,12 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             {
                 case 1:
                     {
-                        StartTest(22); // Timed top 200 one word substitution test
+                        StartTest(20); // Timed top 200 one word substitution test
                         break;
                     }
                 case 2:
                     {
-                        StartTest(23); // Complete top 200 one word substitution test without time limit  
+                        StartTest(21); // Complete top 200 one word substitution test without time limit  
                         break;
                     }
                 case 3: return;
@@ -672,7 +719,7 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             {
                 case 1:
                     {
-                        StartTest(18); // Increase-decrease order of inverse proportionality is test 18
+                        
                         break;
                     }
                 case 2:
@@ -979,62 +1026,57 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
                                 }
                             case 16:
                                 {
-                                    StartMultiplicationTableTest(time);
+                                    StartMultiplicationTableTest();
                                     break;
                                 }
                             case 17:
                                 {
-                                    StartPracticingSquares(time);
+                                    StartPracticingSquares();
                                     break;
                                 }
                             case 18:
                                 {
-                                    IncreaseDecreaseOrderOfInverseProportionality(time);
+                                    IncreaseDecreaseOrderOfInverseProportionality();
                                     break;
                                 }
                             case 19:
                                 {
-                                    AnyOrderOfInverseProportionality(time);
+                                    StartFractionToPercentageConversionTest();
                                     break;
                                 }
                             case 20:
                                 {
-                                    StartFractionToPercentageConversionTest(time);
+                                    StartTimed200OneWordSubstitutionTest(time);
                                     break;
                                 }
                             case 21:
                                 {
-                                    StartPercentageToFractionConversionTest(time);
+                                    StartComplete200OneWordSubstitutionTest();
                                     break;
                                 }
                             case 22:
                                 {
-                                    StartTimed200OneWordSubstitutionTest(time);
+                                    StartEnglishAlphabetPlaceValueTest();
                                     break;
                                 }
                             case 23:
                                 {
-                                    StartComplete200OneWordSubstitutionTest();
+                                    StartEnglishOppositeAlphabetTest();
                                     break;
                                 }
                             case 24:
                                 {
-                                    StartEnglishAlphabetPlaceValueTest();
+                                    StartTimedCustomQA(time); //Start timed custom QA test
                                     break;
                                 }
                             case 25:
                                 {
-                                    StartEnglishOppositeAlphabetTest();
+                                    StartCompleteCustomQA();
                                     break;
                                 }
                             case 26:
                                 {
-                                    StartTimedCustomQA(time); //Start timed custom QA test
-                                    break;
-                                }
-                            case 27:
-                                {
-                                    StartCompleteCustomQA(); 
+                                    StartPracticingCubes();
                                     break;
                                 }
                             default:
@@ -1074,38 +1116,44 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
     }
     
 
-    static void StartFractionToPercentageConversionTest(TimeSpan time)
+    static void StartFractionToPercentageConversionTest()
     {
         // Method to practice fraction to percentage conversion
         // or user enters "exit"
 
-        Random rng = new Random();
-        Stopwatch stopwatch = new();
-        stopwatch.Start();
-        int len = fractionToPercentageTable.Length;
-        int dIndex = 1, nIndex = 0;
+        int[] denominator = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 24, 25, 30, 40, 60};
+        int[] numerator = {1, 2, 3};
+        int[] not2 = {13, 17, 19};
+        int[] not3 = {2, 4, 13, 14, 17, 19};
+        
+        List<TwoNums> fractions = new();
 
-        while (stopwatch.Elapsed < time)
+        for(int i = 0; i < numerator.Length; i++)
         {
-            Console.WriteLine("Fraction to percentage conversion exercise (2 decimal places without rounding)");
-            Console.WriteLine("Enter \"exit\" to go back");
-            PrintScoreBoard(time);
-            Console.WriteLine();
-            do
+            for(int j = 0; j < denominator.Length; j++)
             {
-                dIndex = rng.Next(1, len);
+                if(numerator[i] == 1 || (numerator[i] == 2 && denominator[j] % 2 != 0 && !IsContain(not2, denominator[j])) || (numerator[i] == 3 && denominator[j] % 3 != 0 && !IsContain(not3, denominator[j])))
+                {
+                    TwoNums fraction = new TwoNums(numerator[i], denominator[j]);
+                    fractions.Add(fraction);
+                }
             }
-            while (fractionToPercentageTable[dIndex] == 10);
-            do
-            {
-                nIndex = rng.Next(0, dIndex);
-            }
-            while (!IsCoprime(fractionToPercentageTable[dIndex], fractionToPercentageTable[nIndex]));
+        }
 
-            decimal percentValue = ((decimal)fractionToPercentageTable[nIndex] / fractionToPercentageTable[dIndex]) * 100;
+        List<TwoNums> shuffledFractions = RandomizeList(fractions);
+
+        foreach(TwoNums fraction in shuffledFractions)
+        {
+            Console.WriteLine("Fraction to percentage conversion exercise");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(TimeSpan.Zero);
+            Console.WriteLine();
+            
+
+            decimal percentValue = ((decimal)fraction.FirstNum / fraction.SecondNum) * 100;
             percentValue = Math.Truncate(percentValue * 100) / 100;
 
-            var (stringValue, userInput) = GetDecimalOrExit($"{fractionToPercentageTable[nIndex]} / {fractionToPercentageTable[dIndex]} = ");
+            var (stringValue, userInput) = GetDecimalOrExit($"{fraction.FirstNum} / {fraction.SecondNum} = ");
 
             if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -1117,6 +1165,11 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             {
                 correctThisTest += 1;
             }
+            else
+            {
+                Console.WriteLine(percentValue);
+                Thread.Sleep(3000);
+            }
             if (correctThisTest > maxCorrect)
             {
                 maxCorrect = correctThisTest;
@@ -1125,75 +1178,23 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             Console.Clear();
         }
 
-        stopwatch.Stop();
-        stopwatch.Reset();
         return;
     }
 
 
-    static void StartPercentageToFractionConversionTest(TimeSpan time)
+    static bool IsContain(int[] myArray, int num)
     {
-        // Method to practice percentage to fraction conversion
-        // or user enters "exit"
+        // Method to return true given array contains given integer
 
-        Random rng = new Random();
-        Stopwatch stopwatch = new();
-        stopwatch.Start();
-        int len = fractionToPercentageTable.Length;
-        int dIndex = 1, nIndex = 0;
-
-        while (stopwatch.Elapsed < time)
+        for(int i = 0; i < myArray.Length; i++)
         {
-            Console.WriteLine("Percentage to Fraction conversion exercise");
-            Console.WriteLine("Enter \"exit\" to go back");
-            PrintScoreBoard(time);
-            Console.WriteLine();
-            do
+            if(myArray[i] == num)
             {
-                dIndex = rng.Next(1, len);
+                return true;
             }
-            while (fractionToPercentageTable[dIndex] == 10);
-            do
-            {
-                nIndex = rng.Next(0, dIndex);
-            }
-            while (!IsCoprime(fractionToPercentageTable[dIndex], fractionToPercentageTable[nIndex]));
-
-            decimal percentValue = ((decimal)fractionToPercentageTable[nIndex] / fractionToPercentageTable[dIndex]) * 100;
-            percentValue = Math.Truncate(percentValue * 100) / 100;
-
-            Console.WriteLine(percentValue);
-
-            var (stringValue, userInputNumerator) = GetIntOrExit($"Numerator = ");
-            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Console.Clear();
-                break;
-            }
-
-            var (stringValue2, userInputDenominator) = GetIntOrExit($"Denominator = ");
-            if (stringValue2.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Console.Clear();
-                break;
-            }
-            
-            attemptThisTest += 1;
-            if (userInputNumerator == fractionToPercentageTable[nIndex] && userInputDenominator == fractionToPercentageTable[dIndex])
-            {
-                correctThisTest += 1;
-            }
-            if (correctThisTest > maxCorrect)
-            {
-                maxCorrect = correctThisTest;
-                maxCorrectCount = attemptThisTest;
-            }
-            Console.Clear();
         }
 
-        stopwatch.Stop();
-        stopwatch.Reset();
-        return;
+        return false;
     }
 
 
@@ -1442,6 +1443,23 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
     }
 
 
+    static List<TwoNums> RandomizeList(List<TwoNums> myList)
+    {
+        // Method to randomize the elements of given list into new list
+
+        List<TwoNums> newList = DuplicateList(myList);
+        int len = newList.Count;
+        Random rng = new();
+
+        for(int i = len-1; i > 0; i--)
+        {
+            Swap(newList, rng.Next(0,i+1), i);
+        }
+
+        return newList;
+    }
+
+
     static int[] RandomizeIntArray(int[] myArray)
     {
         // Method to randomize the elements of given int array into new int array
@@ -1485,6 +1503,16 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
     }
 
 
+    static void Swap(List<TwoNums> myList, int i, int j)
+    {
+        // Method to swap elements at given indices
+
+        TwoNums temp = myList[i];
+        myList[i] = myList[j];
+        myList[j] = temp;
+    }
+
+
     static void SwapIntArrayElements(int[] myArray, int i, int j)
     {
         // Method to swap elements at given indices
@@ -1503,6 +1531,22 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
         List<QA> newList = new();
 
         foreach(QA ows in oldList)
+        {
+            newList.Add(ows);
+        }
+
+        return newList;
+    }
+
+
+    static List<TwoNums> DuplicateList(List<TwoNums> oldList)
+    {
+        // Method to duplicate given list
+
+        int len = oldList.Count;
+        List<TwoNums> newList = new();
+
+        foreach(TwoNums ows in oldList)
         {
             newList.Add(ows);
         }
@@ -1549,26 +1593,26 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
     }
 
 
-    static void IncreaseDecreaseOrderOfInverseProportionality(TimeSpan time)
+    static void IncreaseDecreaseOrderOfInverseProportionality()
     {
         // Method to practice inverse proportionality
         // Given A --> B +x%
         // Find B --> A
         // or user enters "exit"
 
-        Random rng = new Random();
-        Stopwatch stopwatch = new();
-        stopwatch.Start();
         int rows = inverseProportionalityTable.GetLength(0);
+        int[] indices = new int[rows];
+        InitIntArray(indices);
+        int[] shuffledIndices = RandomizeIntArray(indices);
 
-        while (stopwatch.Elapsed < time)
+        for(int i = 0; i < shuffledIndices.Length; i++)
         {
             Console.WriteLine("Inverse proportionality exercise");
             Console.WriteLine("Enter \"exit\" to go back");
-            PrintScoreBoard(time);
+            PrintScoreBoard(TimeSpan.Zero);
             Console.WriteLine();
 
-            int row = rng.Next(0, rows);
+            int row = shuffledIndices[i] - 1;
             Console.WriteLine($"A --> B {inverseProportionalityTable[row, 0]}");
 
             var (stringValue, userInput) = GetDecimalOrExit("B --> A = ");
@@ -1583,56 +1627,10 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             {
                 correctThisTest += 1;
             }
-
-            if (correctThisTest > maxCorrect)
+            else
             {
-                maxCorrect = correctThisTest;
-                maxCorrectCount = attemptThisTest;
-            }
-
-            Console.Clear();
-        }
-
-        stopwatch.Stop();
-        stopwatch.Reset();
-        return;
-    }
-
-
-    static void AnyOrderOfInverseProportionality(TimeSpan time)
-    {
-        // Method to practice inverse proportionality in any order
-        // Given A --> B +-x%
-        // Find B --> A
-        // or user enters "exit"
-
-        Random rng = new Random();
-        Stopwatch stopwatch = new();
-        stopwatch.Start();
-        int rows = inverseProportionalityTable.GetLength(0);
-
-        while (stopwatch.Elapsed < time)
-        {
-            Console.WriteLine("Inverse proportionality exercise");
-            Console.WriteLine("Enter \"exit\" to go back");
-            PrintScoreBoard(time);
-            Console.WriteLine();
-
-            int row = rng.Next(0, rows);
-            int col = rng.Next(0, 2);
-            Console.WriteLine($"A --> B {inverseProportionalityTable[row, col]}");
-
-            var (stringValue, userInput) = GetDecimalOrExit("B --> A = ");
-            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Console.Clear();
-                break;
-            }
-
-            attemptThisTest += 1;
-            if (userInput == inverseProportionalityTable[row,Math.Abs(col-1)])
-            {
-                correctThisTest += 1;
+                Console.WriteLine(inverseProportionalityTable[row, 1]);
+                Thread.Sleep(3000);
             }
 
             if (correctThisTest > maxCorrect)
@@ -1644,32 +1642,38 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             Console.Clear();
         }
 
-        stopwatch.Stop();
-        stopwatch.Reset();
         return;
     }
 
 
-    static void StartPracticingSquares(TimeSpan time)
+    static void StartPracticingSquares()
     {
-        // Method to practice squares upto 30
+        // Method to practice squares 2-99
         // or user enters "exit"
 
-        Random rng = new Random();
-        Stopwatch stopwatch = new();
-        stopwatch.Start();
-
-        while (stopwatch.Elapsed < time)
+        Console.WriteLine("Practice squares in range[2, 99]");
+        int startNum, endNum;
+        startNum = GetInt("Enter start range num: ", 2, 99);
+        endNum = GetInt("Enter end range num: ", startNum, 99);
+        int[] nums = new int[endNum - startNum + 1];
+        for(int i = 0; i < nums.Length; i++)
         {
-            Console.WriteLine("Practice squares upto 30");
+            nums[i] = startNum + i;
+        }
+
+        int[] randomNums = RandomizeIntArray(nums);
+        Console.Clear();
+
+        for(int i = 0; i < randomNums.Length; i++)
+        {
+            Console.WriteLine($"Practice squares {nums[0]}-{nums[^1]}");
             Console.WriteLine("Enter \"exit\" to go back");
-            PrintScoreBoard(time);
+            PrintScoreBoard(TimeSpan.Zero);
             Console.WriteLine();
 
-            int n1 = rng.Next(2, 30);
-            int square = (int)Math.Pow(n1, 2);
+            int square = (int)Math.Pow(randomNums[i], 2);
 
-            var (stringValue, userInput) = GetIntOrExit($"{n1}^2 = ");
+            var (stringValue, userInput) = GetIntOrExit($"{randomNums[i]}^2 = ");
             if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
             {
                 Console.Clear();
@@ -1681,6 +1685,11 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             {
                 correctThisTest += 1;
             }
+            else
+            {
+                Console.WriteLine(square);
+                Thread.Sleep(3000);
+            }
 
             if (correctThisTest > maxCorrect)
             {
@@ -1691,30 +1700,109 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             Console.Clear();
         }
 
-        stopwatch.Stop();
-        stopwatch.Reset();
+        return;
+    }
+
+
+    static void StartPracticingCubes()
+    {
+        // Method to practice cubes 2-49
+        // or user enters "exit"
+
+        Console.WriteLine("Practice cubes in range[2, 49]");
+        int startNum, endNum;
+        startNum = GetInt("Enter start range num: ", 2, 49);
+        endNum = GetInt("Enter end range num: ", startNum, 49);
+        int[] nums = new int[endNum - startNum + 1];
+        for(int i = 0; i < nums.Length; i++)
+        {
+            nums[i] = startNum + i;
+        }
+
+        int[] randomNums = RandomizeIntArray(nums);
+        Console.Clear();
+
+        for(int i = 0; i < randomNums.Length; i++)
+        {
+            Console.WriteLine($"Practice cubes {nums[0]}-{nums[^1]}");
+            Console.WriteLine("Enter \"exit\" to go back");
+            PrintScoreBoard(TimeSpan.Zero);
+            Console.WriteLine();
+
+            int cube = (int)Math.Pow(randomNums[i], 3);
+
+            var (stringValue, userInput) = GetIntOrExit($"{randomNums[i]}^3 = ");
+            if (stringValue.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.Clear();
+                break;
+            }
+
+            attemptThisTest += 1;
+            if (cube == userInput)
+            {
+                correctThisTest += 1;
+            }
+            else
+            {
+                Console.WriteLine(cube);
+                Thread.Sleep(3000);
+            }
+
+            if (correctThisTest > maxCorrect)
+            {
+                maxCorrect = correctThisTest;
+                maxCorrectCount = attemptThisTest;
+            }
+
+            Console.Clear();
+        }
+
         return;
     }
     
 
-    static void StartMultiplicationTableTest(TimeSpan time)
+    static void StartMultiplicationTableTest()
     {
         // Method to practice tables [12,19]
         // or user enters "exit"
 
-        Random rng = new Random();
-        Stopwatch stopwatch = new();
-        stopwatch.Start();
-
-        while (stopwatch.Elapsed < time)
+        Console.WriteLine("Enter tables you want to practice");
+        List<int> nums = new();
+        int num;
+        while(true)
         {
-            Console.WriteLine("Practice tables [12,19]");
+            num = GetIntOrZero("");
+            if(num == 0)
+            {
+                break;
+            }
+
+            nums.Add(num);
+        }
+
+        List<TwoNums> tables = new();
+        for(int i = 0; i < nums.Count; i++)
+        {
+            for(int j = 2; j < 10; j++)
+            {
+                TwoNums table = new(nums[i], j);
+                tables.Add(table);
+            }
+        }
+
+        List<TwoNums> shuffledTables = RandomizeList(tables);
+        Console.Clear();
+
+        foreach(TwoNums table in shuffledTables)
+        {
+            Console.WriteLine($"Practice tables [{nums[0]},{nums[^1]}]");
             Console.WriteLine("Enter \"exit\" to go back");
-            PrintScoreBoard(time);
+            PrintScoreBoard(TimeSpan.Zero);
             Console.WriteLine();
 
-            int n1 = rng.Next(12, 20);
-            int n2 = rng.Next(2, 10);
+            int n1 = table.FirstNum;
+            int n2 = table.SecondNum;
             int product = n1 * n2;
 
             var (stringValue, userInput) = GetIntOrExit($"{n1} x {n2} = ");
@@ -1729,6 +1817,11 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             {
                 correctThisTest += 1;
             }
+            else
+            {
+                Console.WriteLine(product);
+                Thread.Sleep(3000);
+            }
 
             if (correctThisTest > maxCorrect)
             {
@@ -1739,8 +1832,6 @@ static (string value, long longValue) GetLongOrExit(string prompt, long? min = n
             Console.Clear();
         }
 
-        stopwatch.Stop();
-        stopwatch.Reset();
         return;
     }
     
